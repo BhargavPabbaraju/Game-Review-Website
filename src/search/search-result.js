@@ -8,11 +8,11 @@ const SearchResult = ({result={
     title:"Portal 2"
 }})=> {
     return (
-            <div className="col-lg-6 d-flex align-items-center p-3 col-xs-12 mh-100">
+            <div className="col-md-6 d-flex align-items-center p-3 col-xs-12 mh-100">
                 <div className="card w-100">
                     <Link className="text-dark text-decoration-none"
                           to={"/detail/"+result._id} element={<DetailComponent/>}>
-                    <img className="card-img-top" alt="Card" src={result.image} height={100} width={100}/>
+                    <img className="card-img-top" alt="Card" src={result.image} height={200}/>
                     <div className="card-body">
                         <i className="bi bi-star-fill text-warning pe-1"></i>{result.rating}
                         <p className="card-title">{result.title}</p>

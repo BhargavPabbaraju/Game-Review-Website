@@ -5,6 +5,9 @@ import {Route, Routes} from "react-router-dom";
 import FavoriteGames from "../favorite-games";
 import SearchComponent from "../search";
 import DetailComponent from "../detail";
+import ProfileComponent from "../profile";
+
+
 
 function MainComponent() {
     return (
@@ -19,6 +22,7 @@ function MainComponent() {
                         <Route path="home"    element={<HomeComponent/>}/>
                         <Route path="search"    element={<SearchComponent/>}/>
                         <Route path="detail/*"    element={<DetailComponent/>}/>
+                        <Route path="profile/*"    element={<ProfileComponent/>}/>
                     </Routes>
 
                 </div>
