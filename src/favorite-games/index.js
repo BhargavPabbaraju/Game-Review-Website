@@ -30,7 +30,6 @@ const FavoriteGames = () => {
         <div>
             <ul className="list-group">
                 {favoriteGames.map((game)=>{
-                    console.log(game);
                     return  <FavoriteGame key={game._id} game={game}/>
                 })}
             </ul>

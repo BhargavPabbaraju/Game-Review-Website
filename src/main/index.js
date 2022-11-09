@@ -4,6 +4,7 @@ import NavigationSidebar from "../navigation-sidebar";
 import {Route, Routes} from "react-router-dom";
 import FavoriteGames from "../favorite-games";
 import SearchComponent from "../search";
+import DetailComponent from "../detail";
 
 function MainComponent() {
     return (
@@ -17,6 +18,7 @@ function MainComponent() {
                     <Routes>
                         <Route path="home"    element={<HomeComponent/>}/>
                         <Route path="search"    element={<SearchComponent/>}/>
+                        <Route path="detail/*"    element={<DetailComponent/>}/>
                     </Routes>
 
                 </div>
