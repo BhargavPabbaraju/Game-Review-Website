@@ -15,22 +15,28 @@ const ProfileReview = ()=>{
     const reviews=[
         {
             _id:123,
+            comment:"I keep getting lost in this game.",
+            rating:0.2,
             game:{
                 title:"Grand Theft Auto V",
                 id:123,
                 image:"https://media.rawg.io/media/games/456/456dea5e1c7e3cd07060c14e96612001.jpg",
             },
 
-            comment:"I keep getting lost in this game.",
-            rating:0.2,
+
 
         },
         {
-            _id:123,
-            gameTitle:"The Witcher 3: Wild Hunt",
-            gameId:123,
-            comment:"I keep getting lost in this game.",
-            rating:5.0,
+            _id:234,
+            comment:"I'm not a witch. I'm a swordsman.",
+            rating:0.2,
+            game:{
+                title:"The Witcher 3: Wild Hunt",
+                id:123,
+                image:"https://media.rawg.io/media/games/618/618c2031a07bbff6b4f611f10b6bcdbc.jpg",
+            },
+
+
 
         },
 

@@ -24,7 +24,7 @@ const ProfileDetails = () => {
                 <div className="row">
                     <div className="col-6">
                         <i className="bi bi-envelope"></i>
-                        <span className="ms-1">{profile.email}</span>
+                        <span className="ms-1 d-md-inline d-none">{profile.email}</span>
                     </div>
                     <div className="col-6">
                         <i className="bi bi-telephone"></i>
