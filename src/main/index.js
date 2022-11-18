@@ -6,7 +6,15 @@ import FavoriteGames from "../favorite-games";
 import SearchComponent from "../search";
 import DetailComponent from "../detail";
 import ProfileComponent from "../profile";
-
+import profileReducer from "../profile/profile-reducer";
+import EditProfile from "../edit-profile";
+import { configureStore }
+  from '@reduxjs/toolkit';
+import {Provider} from "react-redux";
+import SearchPeople from "../searchProfile";
+const store = configureStore({
+  reducer: {profile:profileReducer}
+});
 
 
 function MainComponent() {
@@ -18,13 +26,16 @@ function MainComponent() {
                 </div>
                 <div className="col-10 col-md-10 col-lg-7 col-xl-6"
                      style={{"position": "relative"}}>
-                    <Routes>
+                  <Provider store={store}>
+                  <Routes>
                         <Route path="home"    element={<HomeComponent/>}/>
                         <Route path="search"    element={<SearchComponent/>}/>
                         <Route path="detail/*"    element={<DetailComponent/>}/>
                         <Route path="profile/*"    element={<ProfileComponent/>}/>
+                        <Route path="edit-profile" element={<EditProfile/>}/>
+                        <Route path="searchPeople" element={<SearchPeople/>}/>
                     </Routes>
-
+                </Provider>
                 </div>
                 <div className="d-none d-sm-none d-md-none d-lg-block col-lg-4 col-xl-4">
                     <h4>Favorite Games</h4>

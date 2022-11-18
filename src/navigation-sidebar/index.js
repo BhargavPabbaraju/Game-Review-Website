@@ -22,7 +22,7 @@ const NavigationSidebar = () => {
                 <i className="bi bi-person-fill pe-1"></i>
                 <span className="d-none d-xl-inline"> Profile</span>
             </Link>
-            <Link to="/profile" className={`list-group-item ${active === 'search-people'?'active':''}`}>
+            <Link to="/searchPeople" className={`list-group-item ${active === 'search-people'?'active':''}`}>
                 <i className="bi bi-person-lines-fill pe-1"></i>
                 <span className="d-none d-xl-inline"> Search People</span>
             </Link>

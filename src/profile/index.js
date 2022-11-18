@@ -3,20 +3,13 @@ import "./index.css";
 import ProfileDetails from "./profile-details";
 import {Link} from "react-router-dom";
 import ProfileReview from "../profile-review";
+import {useSelector} from "react-redux";
 
 
 
 const ProfileComponent = () => {
-    const profile = {
-        firstName:"Roronoa",
-        lastName:"Zoro",
-        bannerPicture:"https://pbs.twimg.com/profile_banners/1356621333250138118/1666110824/1500x500",
-        profilePicture:"https://pbs.twimg.com/profile_images/1589592333208924161/v0rPPnAA_400x400.jpg",
-        location:"Wano Kuni",
-        dateOfBirth:"2001-11-11",
-        bio:"On my path to become the strongest swordswman alive!"
-
-    }
+    const profile = useSelector(
+        (state) => state.profile);
     return(
         <div className="border border-secondary rounded-4 ">
             <div className="row">
@@ -38,10 +31,10 @@ const ProfileComponent = () => {
                          src={profile.profilePicture} className="rounded-circle wd-profile-picture" width={120}/>
                 </div>
                 <div className="col-1">
-                    <span className="badge rounded-pill bg-primary fs-6">Streamer</span>
+                    <span className="badge rounded-pill bg-primary fs-6">{profile.role}</span>
                 </div>
                 <div className="col">
-                    <Link to="/tuiter/edit-profile">
+                    <Link to="/edit-profile">
                         <button className="btn btn-light rounded-pill float-end me-3">Edit profile</button>
                     </Link>
                 </div>

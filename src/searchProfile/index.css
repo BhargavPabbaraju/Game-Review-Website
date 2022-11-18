@@ -1,0 +1,12 @@
+.wd-search-icon{
+    position:relative;
+    top:30px;
+}
+.user-profile-pic {
+    bottom: 0px;
+    left: 30px;
+    top: 70px;
+    background-color: white;
+    border: white solid;
+    border-radius: 50%;
+}

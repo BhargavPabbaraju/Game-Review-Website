@@ -2,3 +2,8 @@
     position:relative;
     top:30px;
 }
+.wd-profile-picture{
+    position: relative;
+    bottom:60px;
+    background-color: white;
+}
