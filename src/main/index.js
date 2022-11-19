@@ -13,19 +13,23 @@ import { configureStore }
 import {Provider} from "react-redux";
 import SearchPeople from "../searchProfile";
 import RegisterUser from "../registerPage";
+import {useLocation} from "react-router";
 const store = configureStore({
   reducer: {profile:profileReducer}
 });
 
 
 function MainComponent() {
+    const {pathname} = useLocation();
+    const paths = pathname.split('/')
+    const active = paths[1];
     return (
 
             <div className="row mt-2">
                 <div className="col-2 col-md-2 col-lg-1 col-xl-2">
                     <NavigationSidebar active="explore"/>
                 </div>
-                <div className="col-10 col-md-10 col-lg-7 col-xl-6"
+                <div className="col"
                      style={{"position": "relative"}}>
                   <Provider store={store}>
                   <Routes>
@@ -39,11 +43,15 @@ function MainComponent() {
                     </Routes>
                 </Provider>
                 </div>
-                <div className="d-none d-sm-none d-md-none d-lg-block col-lg-4 col-xl-4">
-                    <h4>Favorite Games</h4>
-                    <FavoriteGames/>
-                </div>
+                {
+                    active!="register" && active!="login" &&
+                    <div className="d-none d-sm-none d-md-none d-lg-block col-lg-4 col-xl-4">
+                        <h4>Favorite Games</h4>
+                        <FavoriteGames/>
+                    </div>
+                }
 
+                {/*className="col-10 col-md-10 col-lg-7 col-xl-6"*/}
             </div>
 
     );
