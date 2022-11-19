@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {useLocation} from "react-router";
 import GenreItem from "./genre-item";
 import parse from "html-react-parser";
@@ -16,11 +16,15 @@ const DetailComponent = () => {
 
         stores:[
            "nintendo.com","amazon.com"
-        ]
+        ],
+        likes:1234,
+        liked:true
     }
     const {pathname} = useLocation();
     const paths = pathname.split('/')
     const id = paths[2]; // Get Game by Id
+
+    let [liked,setLiked] = useState(game.liked);
 
     return (
         <div>
@@ -48,7 +52,23 @@ const DetailComponent = () => {
                 {game.stores.map(link=><div className="col text-primary">{link}</div>)}
             </div>
             <div className="row">
-                <h5>Reviews</h5>
+                <h5 className="col">Reviews</h5>
+                    <div className="col-2 fs-5">
+                        {!liked && <i className="bi bi-heart me-1 pt-2" onClick={
+                            e=>{setLiked(!liked)}}></i>}
+                        {liked && <i className="bi bi-heart-fill me-1 text-danger pt-2" onClick={
+                            e=>{setLiked(!liked)}
+                        }></i>}
+                        {game.likes}
+                    </div>
+                    <div className="col-3">
+                        <button className="btn btn-primary rounded rounded-pill">
+                            Post a review
+                        </button>
+                    </div>
+
+            </div>
+            <div className="row mt-4">
                 <Reviews/>
             </div>
         </div>
