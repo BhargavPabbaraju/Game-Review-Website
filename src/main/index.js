@@ -12,6 +12,7 @@ import { configureStore }
   from '@reduxjs/toolkit';
 import {Provider} from "react-redux";
 import SearchPeople from "../searchProfile";
+import RegisterUser from "../registerPage";
 const store = configureStore({
   reducer: {profile:profileReducer}
 });
@@ -33,6 +34,7 @@ function MainComponent() {
                         <Route path="detail/*"    element={<DetailComponent/>}/>
                         <Route path="profile/*"    element={<ProfileComponent/>}/>
                         <Route path="edit-profile" element={<EditProfile/>}/>
+                          <Route path="register" element={<RegisterUser/>}/>
                         <Route path="searchPeople" element={<SearchPeople/>}/>
                     </Routes>
                 </Provider>

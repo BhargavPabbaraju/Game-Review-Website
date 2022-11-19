@@ -37,6 +37,9 @@ const ProfileComponent = () => {
                     <Link to="/edit-profile">
                         <button className="btn btn-light rounded-pill float-end me-3">Edit profile</button>
                     </Link>
+                    <Link to="/register">
+                        <button className="btn btn-light rounded-pill float-end me-3">Register</button>
+                    </Link>
                 </div>
             </div>
             <div className="wd-pull-up ms-4">
