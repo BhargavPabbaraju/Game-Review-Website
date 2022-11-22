@@ -40,6 +40,9 @@ const ProfileComponent = () => {
                     <Link to="/register">
                         <button className="btn btn-light rounded-pill float-end me-3">Register</button>
                     </Link>
+                    <Link to="/login">
+                        <button className="btn btn-light rounded-pill float-end me-3">Login</button>
+                    </Link>
                 </div>
             </div>
             <div className="wd-pull-up ms-4">

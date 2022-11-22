@@ -2,6 +2,10 @@ import React from "react";
 import {Link} from "react-router-dom";
 
 const Profile = ({profile})=> {
+  var badge="badge rounded-pill pt-1 pb-1 fw-bolder ";
+  if(profile.role==="Streamer")badge=badge+" bg-warning ";
+  else if(profile.role==="General")badge=badge+" bg-success ";
+  else badge=badge+"bg-info";
   return (<>
         {/* <div className="col-md-6 d-flex align-items-center p-3 col-xs-12 mh-100">
         <div className="card w-100">
@@ -37,7 +41,11 @@ const Profile = ({profile})=> {
              </div>
              <div className="col-12  card-body p-3">
                <Link className="text-white text-decoration-none">{profile.firstName} {profile.lastName}</Link>
-               <p className="card-title">Role : {profile.role}</p>
+               <p className="card-title">{"Role : "}
+               <span className={badge}>
+                        {profile.role}
+                    </span>
+               </p>
              </div>
            </div>
           </div>

@@ -9,6 +9,7 @@ import {updateProfile} from "../profile/profile-reducer";
 const EditProfile=()=>{
   const userprofile=useSelector(state => state.profile)
   const [profile,setProfile]=useState(userprofile);
+  const[date,setDate]=useState(userprofile.dateOfBirth)
   const dispatch = useDispatch();
   const updateProfileHandler= () => {
     dispatch(updateProfile(profile))
@@ -66,8 +67,8 @@ const EditProfile=()=>{
               <label htmlFor="dateofbirth"
                      className="col-sm-2 col-form-label">D.O.B</label>
               <div className="col-sm-10">
-                <input type="text" className="form-control"
-                       onChange={(e)=>{setProfile(prevState=>({...prevState,dateOfBirth:e.target.value}))}}
+                <input className="form-control" type="date"
+                       onChange={(e)=>{setProfile(prevState=>({...prevState,dateOfBirth:e.target.value.toString()}))}}
                        id="dateofbirth" value={profile.dateOfBirth}/>
               </div>
             </div>
