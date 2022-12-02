@@ -7,6 +7,7 @@ import SearchComponent from "../search";
 import DetailComponent from "../detail";
 import ProfileComponent from "../profile";
 import profileReducer from "../profile/profile-reducer";
+import searchQueryReducer from "../search/search-reducer";
 import EditProfile from "../edit-profile";
 import { configureStore }
   from '@reduxjs/toolkit';
@@ -18,7 +19,12 @@ import Login from "../registerPage/login";
 import CreateGameComponent from "../create-games";
 import ViewGameComponent from "../view-created-games";
 const store = configureStore({
-  reducer: {profile:profileReducer}
+  reducer: {profile:profileReducer,
+      searchQuery:searchQueryReducer
+
+  },
+
+
 });
 
 
@@ -32,7 +38,7 @@ function MainComponent() {
                 <div className="col-2 col-md-2 col-lg-1 col-xl-2">
                     <NavigationSidebar active="explore"/>
                 </div>
-                <div className="col"
+                <div className="col-10 col-md-10 col-lg-7 col-xl-6"
                      style={{"position": "relative"}}>
                   <Provider store={store}>
                   <Routes>
@@ -57,7 +63,7 @@ function MainComponent() {
                     </div>
                 }
 
-                {/*className="col-10 col-md-10 col-lg-7 col-xl-6"*/}
+
             </div>
 
     );

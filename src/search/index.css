@@ -7,3 +7,8 @@
     bottom:60px;
     background-color: white;
 }
+
+.wd-search-button{
+    position:relative;
+    top:21px;
+}
