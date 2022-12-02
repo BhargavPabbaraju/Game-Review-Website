@@ -15,6 +15,8 @@ import SearchPeople from "../searchProfile";
 import RegisterUser from "../registerPage";
 import {useLocation} from "react-router";
 import Login from "../registerPage/login";
+import CreateGameComponent from "../create-games";
+import ViewGameComponent from "../view-created-games";
 const store = configureStore({
   reducer: {profile:profileReducer}
 });
@@ -42,6 +44,8 @@ function MainComponent() {
                           <Route path="register" element={<RegisterUser/>}/>
                     <Route path="login" element={<Login/>}/>
                         <Route path="searchPeople" element={<SearchPeople/>}/>
+                        <Route path="addGame" element ={<CreateGameComponent/>}/>
+                        <Route path="viewGame" element ={<ViewGameComponent/>}/>
                     </Routes>
                 </Provider>
                 </div>

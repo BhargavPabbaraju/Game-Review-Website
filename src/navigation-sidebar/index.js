@@ -26,11 +26,14 @@ const NavigationSidebar = () => {
                 <i className="bi bi-person-lines-fill pe-1"></i>
                 <span className="d-none d-xl-inline"> Search People</span>
             </Link>
-            <Link to="/profile" className={`list-group-item ${active === 'add-game'?'active':''}`}>
+            <Link to="/addGame" className={`list-group-item ${active === 'add-game'?'active':''}`}>
                 <i className="bi bi-controller pe-1"></i>
                 <span className="d-none d-xl-inline"> Add Game</span>
             </Link>
-
+            <Link to="/viewGame" className={`list-group-item ${active === 'view-game'?'active':''}`}>
+                <i className="bi bi-view-list pe-1"></i>
+                <span className="d-none d-xl-inline"> View Your Games</span>
+            </Link>
             <Link to="/more" className={`list-group-item ${active === 'logout'?'active':''}`}>
                 <i className="bi bi-box-arrow-left pe-1"></i>
                 <span className="d-none d-xl-inline"> Logout</span>
