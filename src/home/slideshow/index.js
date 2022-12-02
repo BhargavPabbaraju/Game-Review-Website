@@ -1,62 +1,108 @@
-import React from "react";
-import SlideshowItem from "./slideshow-item";
+import React, {useEffect, useState} from "react";
+
+// Import Swiper React components
+import {Swiper, SwiperSlide} from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/effect-fade";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
+import { Autoplay,EffectFade, Navigation, Pagination } from "swiper";
+
+import axios from "axios";
+import './index.css';
+import {Link} from "react-router-dom";
+import DetailComponent from "../../detail";
+
+
+const apiKey = "f227150707ad40b08b9a626750b0564b";
+
 
 
 const Slideshow = () => {
+    const url = `https://api.rawg.io/api/games?key=${apiKey}&publishers=nintendo&ordering=-released&page_size=5`
+    const [data,setData] = useState(null);
+    const [loading,setLoading] = useState(true);
+    const [error,setError] = useState(null);
 
-    const slideshowitems = [
-        {
-            _id:123,
-            active:false,
-            image:"https://media.rawg.io/media/games/456/456dea5e1c7e3cd07060c14e96612001.jpg",
-            title:"Grand Theft Auto V",
-            rating:4.47,
-        },
-        {
-            _id:234,
-            active:true,
-            image:"https://media.rawg.io/media/games/618/618c2031a07bbff6b4f611f10b6bcdbc.jpg",
-            title:"The Witcher 3: Wild Hunt",
-            rating:4.06,
-        },
-        {
-            _id:345,
-            active:false,
-            image:"https://media.rawg.io/media/games/328/3283617cb7d75d67257fc58339188742.jpg",
-            title:"Portal 2",
-            rating:4.61,
-        },
-    ]
+    const getData = async ()=>{
+        try{
+            const response = await axios.get(
+                url
+            );
+            setData(response.data);
+            setError(null);
+        }catch(err){
+            setError(err.message);
+            setData(null);
+        }finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(()=>{
+
+                  getData();
+              }
+
+        ,[]
+    )
+
+
+
 
     return (
-        <div>
-            <div id ="slideshow" class="carousel slide" data-ride ="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#slideshow" data-slide-to={0} class="active"></li>
-                    <li data-target="#slideshow" data-slide-to={1}></li>
-                    <li data-target="#slideshow" data-slide-to={2}></li>
-                </ol>
-                <div class="carousel-inner">
-                    {
-                        slideshowitems.map(item=>
-                                               <SlideshowItem key={item._id} item={item}/>
-                        )
+            <>
+                {loading && <h5>Loading..</h5>}
+                {!loading &&
+                 <Swiper
+                     autoplay={{
+                         delay: 2500,
+                         disableOnInteraction: false,
+                         waitForTransition:true,
+                     }}
+                     spaceBetween={60}
+                     effect={"fade"}
+                     navigation={true}
+                     pagination={{
+                         clickable: true,
+                     }}
+                     modules={[Autoplay,EffectFade, Navigation, Pagination]}
+                     className="mySwiper"
+                     style={{
+                         "--swiper-pagination-color": "white",
+                         "--swiper-pagination-bullet-inactive-color": "gray",
+                         "--swiper-pagination-bullet-inactive-opacity": "0.6",
+                         "--swiper-pagination-bullet-size":"10px",
+                         "--swiper-pagination-bullet-horizontal-gap": "10px",
 
-                    }
-                </div>
-                <a className="carousel-control-prev" href="#slideshow" role="button"
-                   data-slide="prev">
-                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span className="sr-only">Previous</span>
-                </a>
-                <a className="carousel-control-next" href="#slideshow" role="button"
-                   data-slide="next">
-                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span className="sr-only">Next</span>
-                </a>
-            </div>
+                 }}
 
-        </div>
+                 >
+                     {data.results.map(game=>{
+                         return (<SwiperSlide>
+                             <Link className="text-dark text-decoration-none"
+                                   to={"/detail/"+game.id} element={<DetailComponent/>}>
+                             <div className="wd-drk">
+                                 <img src={game.background_image} className="w-100 rounded"
+                                      height={400}
+                                 />
+                                 <h5 className="carousel-caption">{game.name}</h5>
+                             </div>
+                         </Link>
+                         </SwiperSlide>);
+                     })}
+                 </Swiper>
+
+
+
+
+                }
+            </>
+
+
     );
 }
 
