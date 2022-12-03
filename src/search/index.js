@@ -8,14 +8,7 @@ import SearchResult from "./search-result";
 import {useDispatch, useSelector} from "react-redux";
 import {updateURL} from "../search/search-reducer";
 
-
 const apiKey = "f227150707ad40b08b9a626750b0564b";
-
-
-
-
-
-
 
 const SearchComponent = ()=>{
     const [data,setData] = useState(null);

@@ -4,16 +4,8 @@ import {updateDetail} from "../detail/detail-reducer";
 import {Link} from "react-router-dom";
 
 const CreateGameComponent = () => {
-  const userdetail=useSelector(state => state.profile)
-  const [detail,setDetail]=useState(userdetail);
-  const[title,setTitle]=useState(userdetail.title)
-  const[tag,setTag]=useState(userdetail.genres)
-  const[desc,setDesc]=useState(userdetail.desc)
-  const[url,setUrl]=useState(userdetail.stores)
-  const dispatch = useDispatch();
-  const updateDetailHandler= () => {
-    dispatch(updateDetail(detail))
-  }
+
+
 
   return (
       <form id="usrform">
@@ -25,8 +17,8 @@ const CreateGameComponent = () => {
           </div>
           <div className="col-3 col-md-2 pt-4">
             <input type="text"
-                   onChange={(e)=>{setDetail(prevState=>({...prevState,title:e.target.value}))}}
-                   id="title" name="title" placeholder="Title goes here" value={detail.title}></input>
+
+                   id="title" name="title" placeholder="Title goes here" ></input>
           </div>
         </div>
         <div className="row p-2 mb-1">
@@ -43,7 +35,7 @@ const CreateGameComponent = () => {
           </div>
           <div className="col-9 col-md-9 pt-4">
             <textarea rows="5" cols="30" name="genres" form="usrform"
-                      onChange={(e)=>{setDetail(prevState=>({...prevState,genres:e.target.value}))}}
+
                       placeholder="Tags can be separated with ',' (Example: RPG,Adventure,Playstation,..)"></textarea>
           </div>
         </div>
@@ -53,7 +45,6 @@ const CreateGameComponent = () => {
           </div>
           <div className="col-9 col-md-9 pt-4">
             <textarea rows="5" cols="30" name="description" form="usrform"
-                      onChange={(e)=>{setDetail(prevState=>({...prevState,desc:e.target.value}))}}
                       placeholder="Description goes here"></textarea>
           </div>
         </div>
@@ -63,7 +54,6 @@ const CreateGameComponent = () => {
           </div>
           <div className="col-9 col-md-9 pt-4">
             <textarea rows="5" cols="30" name="tags" form="usrform"
-                      onChange={(e)=>{setDetail(prevState=>({...prevState,stores:e.target.value}))}}
                       placeholder="URLs can be separated with ',' (Example: amazon.com,nintendo.com,..)"></textarea>
           </div>
         </div>

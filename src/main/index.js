@@ -11,7 +11,8 @@ import searchQueryReducer from "../search/search-reducer";
 import EditProfile from "../edit-profile";
 import { configureStore }
   from '@reduxjs/toolkit';
-import {Provider} from "react-redux";
+
+import {Provider, useSelector} from "react-redux";
 import SearchPeople from "../searchProfile";
 import RegisterUser from "../registerPage";
 import {useLocation} from "react-router";
@@ -32,6 +33,7 @@ function MainComponent() {
     const {pathname} = useLocation();
     const paths = pathname.split('/')
     const active = paths[1];
+  const userData=useSelector(state => state.userData);
     return (
 
             <div className="row mt-2">
@@ -40,7 +42,7 @@ function MainComponent() {
                 </div>
                 <div className="col-10 col-md-10 col-lg-7 col-xl-6"
                      style={{"position": "relative"}}>
-                  <Provider store={store}>
+
                   <Routes>
                         <Route path="home"    element={<HomeComponent/>}/>
                         <Route path="search"    element={<SearchComponent/>}/>
@@ -53,7 +55,7 @@ function MainComponent() {
                         <Route path="addGame" element ={<CreateGameComponent/>}/>
                         <Route path="viewGame" element ={<ViewGameComponent/>}/>
                     </Routes>
-                </Provider>
+
                 </div>
                 {
                     active!="register" && active!="login" &&
@@ -65,6 +67,7 @@ function MainComponent() {
 
 
             </div>
+
 
     );
 }

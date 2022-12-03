@@ -1,5 +1,8 @@
 import { useRef, useState, useEffect } from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import {createUserThunk, loginUserThunk} from "../services/user-thunks";
+import HomeComponent from "../home";
 
 const Login = () => {
 
@@ -10,17 +13,31 @@ const Login = () => {
   const [pwd, setPwd] = useState('');
   const [errMsg, setErrMsg] = useState('');
 
-  useEffect(() => {
-    userRef.current.focus();
-  }, [])
+  // useEffect(() => {
+  //   userRef.current.focus();
+  // }, [])
+  //
+  // useEffect(() => {
+  //   setErrMsg('');
+  // }, [user, pwd])
 
-  useEffect(() => {
-    setErrMsg('');
-  }, [user, pwd])
+  const dispatch = useDispatch();
+  const navigate=useNavigate();
+  const userData=useSelector(state => state.userData);
+  useEffect(()=>{
+    console.log("login",userData.profile);
+    if(userData.profile.isLoggedIn){
+      console.log("login")
+      navigate("/home")
+    }
+  },[userData])
 
-
+  const handleSubmit =async (e)=>{
+    e.preventDefault()
+    const userrequest={username:user,password:pwd}
+    dispatch(loginUserThunk(userrequest));
+  }
   return (
-
       <section>
         <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
         <h1>Sign In</h1>
@@ -35,7 +52,6 @@ const Login = () => {
               value={user}
               required
           />
-
           <label htmlFor="password">Password:</label>
           <input
               type="password"
@@ -45,16 +61,15 @@ const Login = () => {
               required
           />
           <br/>
-          <button>Sign In</button>
+          <button onClick={handleSubmit}>Sign In</button>
         </form>
         <p>
           Need an Account?<br />
           <span className="line">
                     <Link to="/register">Sign Up</Link>
-                </span>
+          </span>
         </p>
       </section>
-
   )
 }
 
