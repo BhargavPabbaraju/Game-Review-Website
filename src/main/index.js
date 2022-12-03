@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import HomeComponent from "../home";
 import NavigationSidebar from "../navigation-sidebar";
 import {Route, Routes} from "react-router-dom";
@@ -12,13 +12,14 @@ import EditProfile from "../edit-profile";
 import { configureStore }
   from '@reduxjs/toolkit';
 
-import {Provider, useSelector} from "react-redux";
+import {Provider, useDispatch, useSelector} from "react-redux";
 import SearchPeople from "../searchProfile";
 import RegisterUser from "../registerPage";
 import {useLocation} from "react-router";
 import Login from "../registerPage/login";
 import CreateGameComponent from "../create-games";
 import ViewGameComponent from "../view-created-games";
+import {CheckIsLoggedIn} from "../services/user-thunks";
 const store = configureStore({
   reducer: {profile:profileReducer,
       searchQuery:searchQueryReducer
@@ -34,6 +35,13 @@ function MainComponent() {
     const paths = pathname.split('/')
     const active = paths[1];
   const userData=useSelector(state => state.userData);
+  const dispatch=useDispatch();
+  useEffect(()=>{
+    const token=localStorage.getItem("WebDevToken")
+    if(token){
+      dispatch(CheckIsLoggedIn())
+    }
+  },[])
     return (
 
             <div className="row mt-2">
@@ -50,7 +58,8 @@ function MainComponent() {
                         <Route path="profile/*"    element={<ProfileComponent/>}/>
                         <Route path="edit-profile" element={<EditProfile/>}/>
                           <Route path="register" element={<RegisterUser/>}/>
-                    <Route path="login" element={<Login/>}/>
+
+                    <Route path="login" element={userData.profile.isLoggedIn?<Login/>:<HomeComponent/>}/>
                         <Route path="searchPeople" element={<SearchPeople/>}/>
                         <Route path="addGame" element ={<CreateGameComponent/>}/>
                         <Route path="viewGame" element ={<ViewGameComponent/>}/>

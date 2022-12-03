@@ -50,10 +50,19 @@ const profileSlice=createSlice({
           }
 
         },
-    // [CheckIsLoggedIn.fulfilled]:
-    //     (state, { payload }) => {
-    //       return payload
-    //     }
+    [CheckIsLoggedIn.fulfilled]:
+        (state, { payload }) => {
+
+          if(payload){
+            state.profile={
+              ...payload.data.userObject,
+              token:payload.data.token,
+              isLoggedIn: true
+            }
+            console.log("state",state.profile)
+          }
+
+        }
   }
 
 })

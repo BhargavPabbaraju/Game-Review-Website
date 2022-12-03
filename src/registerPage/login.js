@@ -25,9 +25,13 @@ const Login = () => {
   const navigate=useNavigate();
   const userData=useSelector(state => state.userData);
   useEffect(()=>{
+    if(userData.profile.isLoggedIn){
+      navigate("/home")
+    }
+  },[])
+  useEffect(()=>{
     console.log("login",userData.profile);
     if(userData.profile.isLoggedIn){
-      console.log("login")
       navigate("/home")
     }
   },[userData])

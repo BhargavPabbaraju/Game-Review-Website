@@ -28,9 +28,10 @@ export const loginUser = async (userrequest) => {
 
 export const isLoggedIn = async () => {
   const token = localStorage.getItem("WebDevToken")
-  const response = await axios.post(`${BACKEND_API}/tokenvalidation`, {},
+  const response = await axios.get(`${BACKEND_API}/tokenvalidation`,
       {headers: {"x-auth-token": token}})
-  if (response.err) {
+  console.log("response",response);
+  if (response.data.status!==200) {
     return false;
   }
   return response;
