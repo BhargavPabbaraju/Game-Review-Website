@@ -7,6 +7,7 @@ import FavoriteGames from "../favorite-games";
 import SearchComponent from "../search";
 import DetailComponent from "../detail";
 import ProfileComponent from "../profile";
+import ProfileComponentOther from "../profile/ProfileComponentOther";
 import profileReducer from "../profile/profile-reducer";
 import searchQueryReducer from "../search/search-reducer";
 import EditProfile from "../edit-profile";
@@ -24,7 +25,6 @@ const store = configureStore({
   reducer: { profile: profileReducer, searchQuery: searchQueryReducer },
 });
 
-
 function MainComponent() {
   const { pathname } = useLocation();
   const paths = pathname.split("/");
@@ -33,7 +33,7 @@ function MainComponent() {
   const dispatch = useDispatch();
   useEffect(() => {
     const token = localStorage.getItem("WebDevToken");
-    console.log("bhargav", userData );
+    console.log("bhargav", userData);
     if (token) {
       dispatch(CheckIsLoggedIn());
     }
@@ -51,7 +51,17 @@ function MainComponent() {
           <Route index path="home" element={<HomeComponent />} />
           <Route path="search" element={<SearchComponent />} />
           <Route path="detail/*" element={<DetailComponent />} />
-          <Route path="profile/*" element={<ProfileComponent />} />
+          <Route
+            path="profile"
+            element={
+              userData.profile.isLoggedIn ? (
+                <ProfileComponent />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+          <Route path="profile/*" element={<ProfileComponentOther />} />
           <Route path="edit-profile" element={<EditProfile />} />
           <Route path="register" element={<RegisterUser />} />
 
@@ -71,11 +81,13 @@ function MainComponent() {
         <div className="d-none d-sm-none d-md-none d-lg-block col-lg-4 col-xl-4">
           <h4>Favorite Games</h4>
           {userData.profile.isLoggedIn && <FavoriteGames />}
-          {!userData.profile.isLoggedIn &&
-           <ul className="list-group">
-             <li className="list-group-item">Login to view your favorite games.
-             </li>
-             </ul>}
+          {!userData.profile.isLoggedIn && (
+            <ul className="list-group">
+              <li className="list-group-item">
+                Login to view your favorite games.
+              </li>
+            </ul>
+          )}
         </div>
       )}
     </div>
