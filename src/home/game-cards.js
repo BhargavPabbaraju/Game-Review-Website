@@ -1,47 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import GameCard from "./game-card";
 import axios from "axios";
 import { apiKey } from "../services/user-service";
 
 export const GameCards = () => {
-  const cards = [
-    {
-      _id: 123,
-      active: false,
-      image:
-        "https://media.rawg.io/media/games/456/456dea5e1c7e3cd07060c14e96612001.jpg",
-      title: "Grand Theft Auto V",
-      rating: 4.47,
-    },
-    {
-      _id: 234,
-      active: true,
-      image:
-        "https://media.rawg.io/media/games/618/618c2031a07bbff6b4f611f10b6bcdbc.jpg",
-      title: "The Witcher 3: Wild Hunt",
-      rating: 4.06,
-    },
-    {
-      _id: 345,
-      active: false,
-      image:
-        "https://media.rawg.io/media/games/328/3283617cb7d75d67257fc58339188742.jpg",
-      title: "Portal 2",
-      rating: 4.61,
-    },
-  ];
-  useEffect(async () => {
+  const [cards, setCards] = useState([]);
+  useEffect(() => {
+    getlatestgames();
+  }, []);
+
+  async function getlatestgames() {
     const response = await axios.get(
       `https://api.rawg.io/api/games?key=${apiKey}`
     );
-    console.log(response);
-  }, []);
+    setCards(response.data.results.slice(0, 3));
+  }
 
   return (
     <div>
       <div className="row p-3">
+        <h5>Top Rated Games</h5>
         {cards.map((card) => {
-          return <GameCard key={card._id} card={card} />;
+          return <GameCard key={card.id} card={card} />;
         })}
       </div>
     </div>

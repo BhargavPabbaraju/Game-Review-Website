@@ -19,7 +19,7 @@ const HomeComponent = () => {
     <div>
       <h4>Latest Releases</h4>
       <Slideshow />
-      {!userData.profile.isLoggedIn ? <UserActivities /> : <UserActivities />}
+      {!userData.profile.isLoggedIn ? <GameCards /> : <UserActivities />}
     </div>
   );
 };
