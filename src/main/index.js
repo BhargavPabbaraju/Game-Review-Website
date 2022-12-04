@@ -23,6 +23,8 @@ import Logout from "../registerPage/logout";
 const store = configureStore({
   reducer: { profile: profileReducer, searchQuery: searchQueryReducer },
 });
+
+
 function MainComponent() {
   const { pathname } = useLocation();
   const paths = pathname.split("/");
@@ -68,7 +70,12 @@ function MainComponent() {
       {active != "register" && active != "login" && (
         <div className="d-none d-sm-none d-md-none d-lg-block col-lg-4 col-xl-4">
           <h4>Favorite Games</h4>
-          <FavoriteGames />
+          {userData.profile.isLoggedIn && <FavoriteGames />}
+          {!userData.profile.isLoggedIn &&
+           <ul className="list-group">
+             <li className="list-group-item">Login to view your favorite games.
+             </li>
+             </ul>}
         </div>
       )}
     </div>
