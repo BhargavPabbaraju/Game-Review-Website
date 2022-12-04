@@ -11,7 +11,7 @@ export const GameCards = () => {
 
   async function getlatestgames() {
     const response = await axios.get(
-      `https://api.rawg.io/api/games?key=${apiKey}`
+      `https://api.rawg.io/api/games?key=${apiKey}&ordering=-rating&page_size=3`
     );
     setCards(response.data.results.slice(0, 3));
   }
