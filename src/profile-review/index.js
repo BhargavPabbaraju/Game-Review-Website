@@ -1,9 +1,12 @@
 import React from "react";
 import ProfileReviewItem from "./profile-review-item";
+import {useSelector} from "react-redux";
 
 
 
 const ProfileReview = ()=>{
+    const games=useSelector(state => state.userData.profile.activity)
+    console.log(games)
     const user={
         _id:123,
         userName:"Roronoa Zoro",
@@ -43,12 +46,11 @@ const ProfileReview = ()=>{
     ]
     return (
         <div className="row">
-            <div className="row">
-                <h4>{reviews.length}</h4>
-            </div>
+            {/*<div className="row">*/}
+            {/*    <h4>{reviews.length}</h4>*/}
+            {/*</div>*/}
             <ul className="list-group">
-                {reviews.map(review=><ProfileReviewItem key={review._id} review={review}/>)
-                }
+                {games?games.map(x=><ProfileReviewItem  review={x}/>):""}
             </ul>
         </div>
 

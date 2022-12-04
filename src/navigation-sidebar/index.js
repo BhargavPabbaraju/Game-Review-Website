@@ -25,6 +25,7 @@ const NavigationSidebar = () => {
         <i className="bi bi-search pe-1"></i>
         <span className="d-none d-xl-inline"> Search</span>
       </Link>
+
       <Link
         to="/profile"
         className={`list-group-item ${active === "profile" ? "active" : ""}`}
@@ -41,20 +42,22 @@ const NavigationSidebar = () => {
         <i className="bi bi-person-lines-fill pe-1"></i>
         <span className="d-none d-xl-inline"> Search People</span>
       </Link>
+      {userData.profile.isLoggedIn && userData.profile.role=="creator"?
       <Link
         to="/addGame"
         className={`list-group-item ${active === "add-game" ? "active" : ""}`}
       >
         <i className="bi bi-controller pe-1"></i>
         <span className="d-none d-xl-inline"> Add Game</span>
-      </Link>
+      </Link>:""}
+      {userData.profile.isLoggedIn && userData.profile.role=="creator"?
       <Link
         to="/viewGame"
         className={`list-group-item ${active === "view-game" ? "active" : ""}`}
       >
         <i className="bi bi-view-list pe-1"></i>
         <span className="d-none d-xl-inline"> View Your Games</span>
-      </Link>
+      </Link>:""}
       {userData.profile.isLoggedIn ? (
         <Link
           to="/logout"

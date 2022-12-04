@@ -37,12 +37,12 @@ const ProfileComponent = () => {
                     <Link to="/edit-profile">
                         <button className="btn btn-light rounded-pill float-end me-3">Edit profile</button>
                     </Link>
-                    <Link to="/register">
-                        <button className="btn btn-light rounded-pill float-end me-3">Register</button>
-                    </Link>
-                    <Link to="/login">
-                        <button className="btn btn-light rounded-pill float-end me-3">Login</button>
-                    </Link>
+                    {/*<Link to="/register">*/}
+                    {/*    <button className="btn btn-light rounded-pill float-end me-3">Register</button>*/}
+                    {/*</Link>*/}
+                    {/*<Link to="/login">*/}
+                    {/*    <button className="btn btn-light rounded-pill float-end me-3">Login</button>*/}
+                    {/*</Link>*/}
                 </div>
             </div>
             <div className="wd-pull-up ms-4">
@@ -57,7 +57,7 @@ const ProfileComponent = () => {
                 </div>
                 <ProfileDetails/>
                 <div className="row mt-3">
-                    <h5>Reviews</h5>
+                    <h5>Activities</h5>
                     <div className="row mb-2 rounded-4">
                         <ProfileReview/>
                     </div>
