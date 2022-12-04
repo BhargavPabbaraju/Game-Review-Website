@@ -22,8 +22,8 @@ export const CheckIsLoggedIn =
 export const updateUserThunk =
     createAsyncThunk(
         'tuits/updateTuit',
-        async (tuit) =>
-            await service.updateUser(tuit)
+        async (user) =>{
+          return  await service.updateUser(user)}
     )
 
 

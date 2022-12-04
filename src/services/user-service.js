@@ -1,12 +1,22 @@
 import axios from "axios";
 
 //const API_BASE = process.env.REACT_APP_API_BASE;
-export const BACKEND_API = "http://localhost:3000";
+export const BACKEND_API = "http://localhost:8080";
 
 export const apiKey = "f227150707ad40b08b9a626750b0564b";
 
 export const updateUser = async (user) => {
-  const response = await axios.put(`${BACKEND_API}/${user._id}`, user);
+  console.log("updateusercalled",user);
+  user={uid:user._id,
+    ...user}
+  console.log("usertoken",user.token)
+  const response = await axios.put(`${BACKEND_API}/profile/update`, user,{
+    headers: { "x-auth-token": user.token },
+  });
+  console.log("responnse from server",response)
+  if (response.data.err) {
+    return false;
+  }
   return user;
 };
 
@@ -38,6 +48,7 @@ export const isLoggedIn = async () => {
   }
   return response;
 };
+
 
 export const deleteUser = async (tid) => {
   const response = await axios.delete(`${BACKEND_API}/${tid}`);

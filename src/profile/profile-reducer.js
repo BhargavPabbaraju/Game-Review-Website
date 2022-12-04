@@ -1,9 +1,9 @@
 import React from "react";
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 import {
   CheckIsLoggedIn,
   createUserThunk,
-  loginUserThunk,
+  loginUserThunk, updateUserThunk
 } from "../services/user-thunks";
 // firstName:"Roronoa",
 //     lastName:"Zoro",
@@ -19,51 +19,72 @@ import {
 const profile = {
   profile: {
     isLoggedIn: false,
-    token: "",
-  },
-};
-const profileSlice = createSlice({
-  name: "profile",
-  initialState: profile,
+    token: ""
+  }
+}
+const profileSlice=createSlice({
+  name:'profile',
+  initialState:profile,
   reducers: {
     updateProfile(state, action) {
       state.profile = {
         ...state.profile,
-        ...action.payload,
-      };
+        ...action.payload
+      }
     },
     logoutUser(state, action) {
+
       state.profile = {
+
         isLoggedIn: false,
+
         token: "",
+
       };
+
     },
   },
 
-  extraReducers: {
-    [loginUserThunk.fulfilled]: (state, { payload }) => {
-      if (payload) {
-        state.profile = {
-          ...payload.data.userObject,
-          token: payload.data.token,
-          isLoggedIn: true,
-        };
-        console.log("state", state.profile);
-      } else {
-        alert("Error logging in.Please check the credentials");
-      }
-    },
-    [CheckIsLoggedIn.fulfilled]: (state, { payload }) => {
-      if (payload) {
-        state.profile = {
-          ...payload.data.userObject,
-          token: payload.data.token,
-          isLoggedIn: true,
-        };
-        console.log("state", state.profile);
-      }
-    },
-  },
-});
-export const { updateProfile, logoutUser } = profileSlice.actions;
+  extraReducers:{
+    [loginUserThunk.fulfilled]:
+        (state, { payload }) => {
+          if(payload){
+            state.profile={
+              ...payload.data.userObject,
+              token:payload.data.token,
+              isLoggedIn: true
+            }
+            console.log("state",state.profile)
+          }
+          else{
+            alert("Error logging in.Please check the credentials")
+          }
+
+        },
+    [CheckIsLoggedIn.fulfilled]:
+        (state, { payload }) => {
+            console.log("payload",payload)
+          if(payload){
+            state.profile={
+              ...payload.data.userObject,
+              token:localStorage.getItem("WebDevToken"),
+              isLoggedIn: true
+            }
+            console.log("state",state.profile)
+          }
+
+        },
+    [updateUserThunk.fulfilled]:
+        (state, { payload }) => {
+          if(payload){
+            state.profile={
+              ...payload,
+            }
+            console.log("updatedstate",state.profile)
+          }
+        }
+  }
+
+})
+export const {updateProfile,logoutUser} = profileSlice.actions;
 export default profileSlice.reducer;

@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 
 const ProfileDetails = () => {
     const profile = useSelector(
-        (state) => state.profile);
+        (state) => state.userData.profile);
     const thisUser = true;
     return(
         <div>
@@ -28,7 +28,7 @@ const ProfileDetails = () => {
                 <div className="col-5">
                     <i className="bi bi-balloon"></i>
                     <span className="ms-1">Born {
-                        new Date(profile.dateOfBirth).toLocaleDateString(
+                        new Date(profile.dob).toLocaleDateString(
                             'en-us',{day:"numeric",year:"numeric",month:"long"}
                         )
                     }</span>
@@ -37,7 +37,7 @@ const ProfileDetails = () => {
                     <i className="bi bi-calendar3"></i>
                     <span className="ms-1">Joined {
 
-                        new Date(profile.dateJoined).toLocaleDateString(
+                        new Date(profile.doj).toLocaleDateString(
                             'en-us',{year:"numeric",month:"long"}
                         )
                     }</span>
@@ -45,10 +45,10 @@ const ProfileDetails = () => {
             </div>
             <div className="row mt-3">
                 <div className="col-3">
-                    <span className="fw-bolder">{profile.followingCount}</span> Following
+                    <span className="fw-bolder">{profile.following_count}</span> Following
                 </div>
                 <div className="col-3">
-                    <span className="fw-bolder">{profile.followersCount}</span> Followers
+                    <span className="fw-bolder">{profile.followers_count}</span> Followers
                 </div>
             </div>
         </div>
