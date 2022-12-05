@@ -1,40 +1,95 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import ProfileItem from "./profileItem";
 import "./index.css";
+import { BACKEND_API } from "../services/user-service";
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { followUserThunk, unFollowUserThunk } from "../services/user-thunks";
 
-import userList from "./usersList.json"
-import SearchResult from "../search/search-result";
+const SearchPeople = () => {
+  const [profiles, setprofiles] = useState([]);
+  const userData = useSelector((state) => state.userData);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    userApi();
+  }, [userData]);
 
-const SearchPeople = ()=>{
-  const [profiles, setprofiles]=useState(userList);
-  const p1 = {
-    firstName:"Roronoa",
-    lastName:"Zoro",
-    bannerPicture:"https://pbs.twimg.com/profile_banners/1356621333250138118/1666110824/1500x500",
-    profilePicture:"https://pbs.twimg.com/profile_images/1589592333208924161/v0rPPnAA_400x400.jpg",
-    location:"I'm lost",
-    dateOfBirth:"2001-11-11",
-    dateJoined:"1999-10-11",
-    followingCount:123,
-    followersCount:234,
-    email:"roronoa-zoro@onepiece.com",
-    phone:"+91 1234567890",
-    role:"Streamer"
-  }
-  return(
-      <div>
-        <h4 className="mb-0">Search</h4>
-        <div className="row">
-          <div className="col-12">
-            <i className="bi bi-search wd-search-icon text-light ps-2"></i>
-            <input className="form-control rounded-pill bg-dark ps-4"/>
-            <div className="row">
-              {profiles.map(p1=><ProfileItem  profile={p1}/>)}
-            </div>
+  const userApi = async () => {
+    let response = {};
+    if (userData.profile.isLoggedIn) {
+      response = await axios.get(`${BACKEND_API}/getuserslist`, {
+        headers: { "x-auth-token": userData.profile.token },
+      });
+    } else {
+      response = await axios.get(`${BACKEND_API}/getuserslist`);
+    }
+    if (response.data.status == 200) {
+      setprofiles(response.data.usersData);
+    } else {
+      alert("Data Not Found");
+    }
+  };
+  const followHandler = async (profileData) => {
+    if (userData.profile.isLoggedIn) {
+      dispatch(followUserThunk({ uid: profileData._id }));
+    } else {
+      navigate("/login");
+    }
+  };
+  const unfollowHandler = async (profileData) => {
+    if (userData.profile.isLoggedIn) {
+      dispatch(unFollowUserThunk({ uid: profileData._id }));
+    }
+  };
+  const searchHandler = async (e) => {
+    if (e.key == "Enter") {
+      let response = {};
+      if (e.target.value.length > 0) {
+        if (userData.profile.isLoggedIn) {
+          response = await axios.get(
+            `${BACKEND_API}/searchuser/${e.target.value}`,
+            {
+              headers: { "x-auth-token": userData.profile.token },
+            }
+          );
+        } else {
+          response = await axios.get(
+            `${BACKEND_API}/searchuser/${e.target.value}`
+          );
+        }
+        if (response.data.status == 200) {
+          setprofiles(response.data.usersData);
+        }
+      } else {
+        userApi();
+      }
+    }
+  };
+  return (
+    <div>
+      <h4 className="mb-0">Search</h4>
+      <div className="row">
+        <div className="col-12">
+          <i className="bi bi-search wd-search-icon text-light ps-2"></i>
+          <input
+            className="form-control rounded-pill bg-dark ps-4"
+            onKeyUp={searchHandler}
+          />
+          <div className="row">
+            {profiles.map((p1) => (
+              <ProfileItem
+                profile={p1}
+                unfollowHandler={unfollowHandler}
+                followHandler={followHandler}
+              />
+            ))}
           </div>
         </div>
       </div>
+    </div>
   );
-}
+};
 
 export default SearchPeople;

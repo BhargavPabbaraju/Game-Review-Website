@@ -1,29 +1,34 @@
-import {createAsyncThunk}
-  from "@reduxjs/toolkit"
-import * as service
-  from "./user-service"
-
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import * as service from "./user-service";
 
 export const loginUserThunk = createAsyncThunk(
-    'App/loginuser',
-    async (userrequest) =>{
-       return await service.loginUser(userrequest);
-    }
-)
+  "App/loginuser",
+  async (userrequest) => {
+    return await service.loginUser(userrequest);
+  }
+);
 
-export const CheckIsLoggedIn =
-    createAsyncThunk(
-        'checkloggedIn',
-        async () => {
-           return  await service.isLoggedIn();}
-    )
+export const CheckIsLoggedIn = createAsyncThunk("checkloggedIn", async () => {
+  return await service.isLoggedIn();
+});
 
+export const updateUserThunk = createAsyncThunk(
+  "tuits/updateTuit",
+  async (user) => {
+    return await service.updateUser(user);
+  }
+);
 
-export const updateUserThunk =
-    createAsyncThunk(
-        'tuits/updateTuit',
-        async (user) =>{
-          return  await service.updateUser(user)}
-    )
+export const followUserThunk = createAsyncThunk(
+  "tuits/followUser",
+  async (uid) => {
+    return await service.followUser(uid);
+  }
+);
 
-
+export const unFollowUserThunk = createAsyncThunk(
+  "tuits/unfollowUser",
+  async (uid) => {
+    return await service.unfollowUser(uid);
+  }
+);
