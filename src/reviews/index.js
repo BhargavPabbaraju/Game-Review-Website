@@ -1,7 +1,25 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import ReviewItem from "./review-item";
+import {useSelector} from "react-redux";
+import axios from "axios";
+import {BACKEND_API} from "../services/user-service";
 
-const Reviews = () => {
+const Reviews = (game) => {
+    const [gamereview, setgamereview]=useState("")
+    const userData = useSelector((state) => state.userData);
+    useEffect(() => {
+        getGameReviews();
+    }, [userData]);
+
+    async function getGameReviews() {
+        console.log("game",game)
+        const response = await axios.get(
+            `${BACKEND_API}/details/getdetails/`+game.game.id,{headers: { "x-auth-token": userData.profile.token }}
+        );
+        console.log("response",response)
+        setgamereview(response.data.data.reviews);
+    }
+
     const reviews=[
         {
             _id:123,
@@ -38,7 +56,7 @@ const Reviews = () => {
     ]
     return (
             <ul className="list-group">
-                {reviews.map(review=><ReviewItem key={review._id} review={review}/>)}
+                {gamereview&& gamereview.map(review=><ReviewItem key={review._id} review={review} iseditable={true}/>)}
             </ul>
     );
 }

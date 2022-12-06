@@ -2,6 +2,8 @@ import React from "react";
 import { createSlice } from "@reduxjs/toolkit";
 import {
   CheckIsLoggedIn,
+   deleteReviewThunk,
+   postReviewThunk, updateReviewThunk,
   createUserThunk,
   followUserThunk,
   loginUserThunk,
@@ -36,46 +38,76 @@ const profileSlice = createSlice({
       };
     },
     logoutUser(state, action) {
+
       state.profile = {
+
         isLoggedIn: false,
 
         token: "",
+
       };
+
     },
   },
 
-  extraReducers: {
-    [loginUserThunk.fulfilled]: (state, { payload }) => {
-      if (payload) {
-        state.profile = {
-          ...payload.data.userObject,
-          token: payload.data.token,
-          isLoggedIn: true,
-        };
-        console.log("state", state.profile);
-      } else {
-        alert("Error logging in.Please check the credentials");
-      }
-    },
-    [CheckIsLoggedIn.fulfilled]: (state, { payload }) => {
-      console.log("payload", payload);
-      if (payload) {
-        state.profile = {
-          ...payload.data.userObject,
-          token: localStorage.getItem("WebDevToken"),
-          isLoggedIn: true,
-        };
-        console.log("state", state.profile);
-      }
-    },
-    [updateUserThunk.fulfilled]: (state, { payload }) => {
-      if (payload) {
-        state.profile = {
-          ...payload,
-        };
-        console.log("updatedstate", state.profile);
-      }
-    },
+  extraReducers:{
+    [loginUserThunk.fulfilled]:
+        (state, { payload }) => {
+          if(payload){
+            state.profile={
+              ...payload.data.userObject,
+              token:payload.data.token,
+              isLoggedIn: true
+            }
+            console.log("state",state.profile)
+          }
+          else{
+            alert("Error logging in.Please check the credentials")
+          }
+
+        },
+    [CheckIsLoggedIn.fulfilled]:
+        (state, { payload }) => {
+            console.log("payload",payload)
+          if(payload){
+            state.profile={
+              ...payload.data.userObject,
+              token:localStorage.getItem("WebDevToken"),
+              isLoggedIn: true
+            }
+            console.log("state",state.profile)
+          }
+
+        },
+    [updateUserThunk.fulfilled]:
+        (state, { payload }) => {
+          if(payload){
+            state.profile={
+              ...payload,
+            }
+            console.log("updatedstate",state.profile)
+          }
+        },
+    [postReviewThunk.fulfilled]:
+        (state, { payload }) => {
+          if(payload){
+            state.profile={
+             ...state.profile,
+              activity:payload.data.activity
+            }
+            console.log("postReview",state.profile)
+          }
+        },
+    [updateReviewThunk.fulfilled]:
+        (state, { payload }) => {
+          if(payload){
+            state.profile={
+              ...state.profile,
+              activity:payload.data.activity
+            }
+            console.log("updateReview",state.profile)
+          }
+        },
     [followUserThunk.fulfilled]: (state, { payload }) => {
       if (payload) {
         state.profile = {
@@ -84,8 +116,7 @@ const profileSlice = createSlice({
           following_count: payload.data.following_count,
         };
       }
-    },
-    [unFollowUserThunk.fulfilled]: (state, { payload }) => {
+    },[unFollowUserThunk.fulfilled]: (state, { payload }) => {
       if (payload) {
         state.profile = {
           ...state.profile,
@@ -94,7 +125,19 @@ const profileSlice = createSlice({
         };
       }
     },
-  },
-});
-export const { updateProfile, logoutUser } = profileSlice.actions;
+    [deleteReviewThunk.fulfilled]:
+        (state, { payload }) => {
+          if(payload){
+            state.profile={
+              ...state.profile,
+              activity:payload.data.activity
+            }
+            console.log("deleteReview",state.profile)
+          }
+        }
+
+  }
+
+})
+export const {updateProfile,logoutUser} = profileSlice.actions;
 export default profileSlice.reducer;

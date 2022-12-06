@@ -25,6 +25,12 @@ export const followUserThunk = createAsyncThunk(
     return await service.followUser(uid);
   }
 );
+export const postReviewThunk =
+    createAsyncThunk(
+        'tuits/updateTuit',
+        async (review) =>{
+          return  await service.postReview(review)}
+    )
 
 export const unFollowUserThunk = createAsyncThunk(
   "tuits/unfollowUser",
@@ -32,3 +38,16 @@ export const unFollowUserThunk = createAsyncThunk(
     return await service.unfollowUser(uid);
   }
 );
+export const updateReviewThunk =
+    createAsyncThunk(
+        'tuits/updateTuit',
+        async (review) =>{
+          return  await service.updateReview(review)}
+    )
+
+export const deleteReviewThunk =
+    createAsyncThunk(
+        'tuits/updateTuit',
+        async (review) =>{
+          return  await service.deleteReview(review)}
+    )

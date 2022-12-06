@@ -5,6 +5,10 @@ import Reviews from "../reviews";
 import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
 import { apiKey } from "../services/user-service";
+import "./modal.css"
+import Popup from "reactjs-popup";
+import {Modal} from "./modal";
+
 
 const DetailComponent = () => {
   const path = useLocation().pathname;
@@ -12,6 +16,10 @@ const DetailComponent = () => {
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const openModal = () => {
+    setShowModal(true);
+  };
 
   useEffect(() => {
     const getData = async () => {
@@ -35,6 +43,9 @@ const DetailComponent = () => {
 
   let bg_image =
     "https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg";
+
+
+
   return (
     <div>
       {loading && <h5>Loading...</h5>}
@@ -115,13 +126,15 @@ const DetailComponent = () => {
               {game.likes}
             </div>
             <div className="col-3">
-              <button className="btn btn-primary rounded rounded-pill">
-                Post a review
-              </button>
+              {/*<button className="btn btn-primary rounded rounded-pill">*/}
+              {/*  Post a review*/}
+              {/*</button>*/}
+              <button className="btn btn-primary rounded rounded-pill" onClick={openModal}>Post review</button>
+              {showModal ? <Modal setShowModal={setShowModal} game={game} type={"new"}/> : null}
             </div>
           </div>
           <div className="row mt-4">
-            <Reviews />
+            <Reviews game={game} />
           </div>
         </>
       )}
