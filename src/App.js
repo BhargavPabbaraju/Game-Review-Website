@@ -5,8 +5,9 @@ import {configureStore} from "@reduxjs/toolkit";
 import profileReducer from "./profile/profile-reducer";
 import searchReducer from "./search/search-reducer";
 import {Provider} from "react-redux";
+import gameReducer from "./create-games/game-reducer";
 const store = configureStore({
-  reducer: {userData:profileReducer,searchQuery:searchReducer},
+  reducer: {userData:profileReducer,searchQuery:searchReducer, game: gameReducer},
   response: "",
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false,})
 });
