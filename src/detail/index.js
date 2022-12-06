@@ -132,7 +132,7 @@ const DetailComponent = () => {
               {/*  Post a review*/}
               {/*</button>*/}
 
-                  <button className="btn btn-primary rounded rounded-pill" onClick={openModal}>Post review</button>
+              { userData.profile.isLoggedIn&&  <button className="btn btn-primary rounded rounded-pill" onClick={openModal}>Post review</button>}
               {showModal ? <Modal setShowModal={setShowModal} game={game} type={"new"}/> : null}
 
             </div>

@@ -2,7 +2,7 @@ import axios from "axios";
 import reviews from "../reviews";
 
 //const API_BASE = process.env.REACT_APP_API_BASE;
-export const BACKEND_API = "http://localhost:8080";
+export const BACKEND_API = "http://localhost:8081";
 
 export const apiKey = "f227150707ad40b08b9a626750b0564b";
 

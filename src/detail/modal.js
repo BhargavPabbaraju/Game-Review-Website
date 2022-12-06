@@ -41,6 +41,7 @@ export const Modal = ({ setShowModal, game,type }) => {
       console.log("dispatching for update",editgame)
       dispatch(updateReviewThunk(editgame));
       console.log("updating review")}
+    window.location.reload();
     setShowModal(false);
   }
 

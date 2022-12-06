@@ -17,6 +17,7 @@ const ReviewItem = ({review,iseditable}) => {
       }
       console.log("calling delete review",obj)
       dispatch(deleteReviewThunk(obj))
+        window.location.reload();
     }
     return (
         <li className="list-group-item">
