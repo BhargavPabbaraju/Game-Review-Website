@@ -8,9 +8,11 @@ import { apiKey } from "../services/user-service";
 import "./modal.css"
 import Popup from "reactjs-popup";
 import {Modal} from "./modal";
+import {useSelector} from "react-redux";
 
 
 const DetailComponent = () => {
+  const userData = useSelector((state) => state.userData);
   const path = useLocation().pathname;
   const id = path.split("/")[2];
   const [game, setGame] = useState(null);
@@ -129,8 +131,10 @@ const DetailComponent = () => {
               {/*<button className="btn btn-primary rounded rounded-pill">*/}
               {/*  Post a review*/}
               {/*</button>*/}
-              <button className="btn btn-primary rounded rounded-pill" onClick={openModal}>Post review</button>
+
+                  <button className="btn btn-primary rounded rounded-pill" onClick={openModal}>Post review</button>
               {showModal ? <Modal setShowModal={setShowModal} game={game} type={"new"}/> : null}
+
             </div>
           </div>
           <div className="row mt-4">

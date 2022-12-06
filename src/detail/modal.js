@@ -13,18 +13,23 @@ export const Modal = ({ setShowModal, game,type }) => {
       setShowModal(false);
     }
   };
+  const gametype=type;
   const [review, setReview]=useState(type=="new"?"":game.review)
   const [rating, setRating]=useState(type="new"?"":game.rating)
   const dispatch=useDispatch();
   function postreview(e){
+
     e.preventDefault()
+    console.log("type",gametype)
+    console.log("typecheck",gametype==="new")
+    console.log("postgame",game)
     //call axios and post review
     const obj={
       gameid: game.id,
       review:review,
       rating: rating
     }
-    if(type=="new"){
+    if(gametype==="new"){
     dispatch(postReviewThunk(obj));
     console.log("posting review")}
     else {

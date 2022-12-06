@@ -17,6 +17,11 @@ const Reviews = (game) => {
             `${BACKEND_API}/details/getdetails/`+game.game.id,{headers: { "x-auth-token": userData.profile.token }}
         );
         console.log("response",response)
+        const obj=response.data.data.reviews;
+        obj.sort(function(a, b){
+            if(a.role=="streamer")return -1
+            return 1;
+        });
         setgamereview(response.data.data.reviews);
     }
 
@@ -56,7 +61,20 @@ const Reviews = (game) => {
     ]
     return (
             <ul className="list-group">
-                {gamereview&& gamereview.map(review=><ReviewItem key={review._id} review={review} iseditable={true}/>)}
+                {gamereview&& gamereview.map(review=> userData.profile.isLoggedIn && review.uid==userData.profile._id && <ReviewItem key={review._id} review={review} iseditable={true}/>)}
+                <br/>
+                {gamereview&& gamereview.map(review=> (!userData.profile.isLoggedIn||review.uid!=userData.profile._id) &&  <ReviewItem key={review._id} review={review} iseditable={false}/>)}
+                {/*{gamereview&& gamereview.map(review=><ReviewItem key={review._id} review={review} iseditable={true}/>)}*/}
+                {/*{gamereview&&gamereview.filter(review=>review._id==userData.profile.id)}*/}
+                {/*{gamereview&& gamereview.forEach((review)=>{*/}
+                {/*    if(userData.profile.isLoggedIn && review.uid==userData.profile._id){*/}
+                {/*        console.log("userreview")*/}
+                {/*        && <ReviewItem  review={review} iseditable={true}/>*/}
+                {/*    }*/}
+                {/*    else {*/}
+                {/*      return   <ReviewItem review={review} iseditable={false}/>*/}
+                {/*    }*/}
+                {/*})}*/}
             </ul>
     );
 }

@@ -21,7 +21,7 @@ const ReviewItem = ({review,iseditable}) => {
     return (
         <li className="list-group-item">
             {
-                review.featured &&
+                review.role=="streamer" &&
                 <div className="row d-inline-block mb-2 ">
                     <span className="bg-success rounded-pill pt-1 pb-1 fw-bolder">
                         Featured Review
