@@ -1,11 +1,25 @@
 import React, {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {updateDetail} from "../detail/detail-reducer";
+import {useDispatch} from "react-redux";
 import {Link} from "react-router-dom";
+import gameReducer, {createGame, deleteGame, updateGame} from "./game-reducer";
 
 const CreateGameComponent = () => {
-
-
+  let [title, setTitle] = useState('');
+  let [image, setImage] = useState('');
+  let [tag, setTag] = useState('');
+  let [repr, setRepr] = useState('');
+  let [url, setUrl] = useState('');
+  const dispatch = useDispatch();
+  const saveClickHandler = () => {
+    const newGame = {
+      name: title,
+      genres: tag,
+      desc: repr,
+      stores: url,
+    }
+    console.log("Dispatching ViewGameComp", newGame)
+    dispatch(createGame(newGame));
+  }
 
   return (
       <form id="usrform">
@@ -17,8 +31,9 @@ const CreateGameComponent = () => {
           </div>
           <div className="col-3 col-md-2 pt-4">
             <input type="text"
-
-                   id="title" name="title" placeholder="Title goes here" ></input>
+                   id="name" name="name" placeholder="Title goes here"
+                   onChange={(event) => setTitle(event.target.value)}
+                   value={title}></input>
           </div>
         </div>
         <div className="row p-2 mb-1">
@@ -26,7 +41,9 @@ const CreateGameComponent = () => {
             <label>Upload image:</label>
           </div>
           <div className="col-9 col-md-9 pt-4">
-            <input type="file" id="myFile" name="filename" ></input>
+            <input type="file" id="myFile" name="filename"
+                   onChange={(event) => setImage(event.target.value)}
+            value={image}></input>
           </div>
         </div>
         <div className="row p-2 mb-1">
@@ -35,8 +52,9 @@ const CreateGameComponent = () => {
           </div>
           <div className="col-9 col-md-9 pt-4">
             <textarea rows="5" cols="30" name="genres" form="usrform"
-
-                      placeholder="Tags can be separated with ',' (Example: RPG,Adventure,Playstation,..)"></textarea>
+                      placeholder="Tags can be separated with ',' (Example: RPG,Adventure,Playstation,..)"
+                      onChange={(event) => setTag(event.target.value)}
+                      value={tag}></textarea>
           </div>
         </div>
         <div className="row p-2 mb-1">
@@ -45,7 +63,9 @@ const CreateGameComponent = () => {
           </div>
           <div className="col-9 col-md-9 pt-4">
             <textarea rows="5" cols="30" name="description" form="usrform"
-                      placeholder="Description goes here"></textarea>
+                      placeholder="Description goes here"
+                      onChange={(event) => setRepr(event.target.value)}
+                      value={repr}></textarea>
           </div>
         </div>
         <div className="row p-2 mb-1">
@@ -54,13 +74,15 @@ const CreateGameComponent = () => {
           </div>
           <div className="col-9 col-md-9 pt-4">
             <textarea rows="5" cols="30" name="tags" form="usrform"
-                      placeholder="URLs can be separated with ',' (Example: amazon.com,nintendo.com,..)"></textarea>
+                      placeholder="URLs can be separated with ',' (Example: amazon.com,nintendo.com,..)"
+                      onChange={(event) => setUrl(event.target.value)}
+                      value={url} ></textarea>
           </div>
         </div>
           <Link to="/viewGame">
             <div className="row p-2 mb-1">
               <div align='center' className="col-12 col-md-12 pt-4">
-                <button>Save</button>
+                <button onClick={saveClickHandler}>Save</button>
               </div>
             </div>
           </Link>
