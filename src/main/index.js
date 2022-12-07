@@ -21,7 +21,9 @@ import CreateGameComponent from "../create-games";
 import ViewGameComponent from "../view-created-games";
 import { CheckIsLoggedIn } from "../services/user-thunks";
 import Logout from "../registerPage/logout";
+import UpcomingGames from "../view-created-games/Upcoming";
 import FollowersComponent from "../followers";
+
 const store = configureStore({
   reducer: { profile: profileReducer, searchQuery: searchQueryReducer },
 });
@@ -34,7 +36,6 @@ function MainComponent() {
   const dispatch = useDispatch();
   useEffect(() => {
     const token = localStorage.getItem("WebDevToken");
-    console.log("bhargav", userData);
     if (token) {
       dispatch(CheckIsLoggedIn());
     }
@@ -52,6 +53,7 @@ function MainComponent() {
           <Route index path="home" element={<HomeComponent />} />
           <Route path="search" element={<SearchComponent />} />
           <Route path="detail/*" element={<DetailComponent />} />
+          <Route path="upcoming/*" element={<UpcomingGames />} />
           <Route
             path="profile"
             element={
@@ -65,8 +67,14 @@ function MainComponent() {
           <Route path="profile/*" element={<ProfileComponentOther />} />
           <Route path="edit-profile" element={<EditProfile />} />
           <Route path="register" element={<RegisterUser />} />
-            <Route path="following" element={<FollowersComponent following={true}/>} />
-            <Route path="followers" element={<FollowersComponent following={false}/>} />
+          <Route
+            path="following"
+            element={<FollowersComponent following={true} />}
+          />
+          <Route
+            path="followers"
+            element={<FollowersComponent following={false} />}
+          />
 
           <Route
             path="login"
