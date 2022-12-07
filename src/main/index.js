@@ -21,6 +21,7 @@ import CreateGameComponent from "../create-games";
 import ViewGameComponent from "../view-created-games";
 import { CheckIsLoggedIn } from "../services/user-thunks";
 import Logout from "../registerPage/logout";
+import FollowersComponent from "../followers";
 const store = configureStore({
   reducer: { profile: profileReducer, searchQuery: searchQueryReducer },
 });
@@ -64,6 +65,8 @@ function MainComponent() {
           <Route path="profile/*" element={<ProfileComponentOther />} />
           <Route path="edit-profile" element={<EditProfile />} />
           <Route path="register" element={<RegisterUser />} />
+            <Route path="following" element={<FollowersComponent following={true}/>} />
+            <Route path="followers" element={<FollowersComponent following={false}/>} />
 
           <Route
             path="login"
