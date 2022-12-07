@@ -51,3 +51,14 @@ export const deleteReviewThunk =
         async (review) =>{
           return  await service.deleteReview(review)}
     )
+
+export const updateLikesThunk =
+    createAsyncThunk(
+        'tuits/updateTuit',
+        async (obj) =>{
+          if(obj.like)
+          {return  await service.increaseCount(obj)}
+          await service.decreaseCount(obj)
+        }
+    )
+

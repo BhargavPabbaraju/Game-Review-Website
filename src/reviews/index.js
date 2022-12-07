@@ -1,15 +1,43 @@
 import React, {useEffect, useState} from "react";
 import ReviewItem from "./review-item";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
 import {BACKEND_API} from "../services/user-service";
+import {Modal} from "../detail/modal";
+import {Link} from "react-router-dom";
+import {updateLikesThunk} from "../services/user-thunks";
 
 const Reviews = (game) => {
     const [gamereview, setgamereview]=useState("")
+    const [liked, setLiked] = useState(false);
+    const [likes, setLikes]=useState(0);
+    const [reviewed,setreviewed]=useState(false)
+    const dispatch=useDispatch();
     const userData = useSelector((state) => state.userData);
     useEffect(() => {
         getGameReviews();
     }, [userData]);
+
+    const [showModal, setShowModal] = useState(false);
+    const openModal = () => {
+        setShowModal(true);
+    };
+
+    const increaseCount=(e)=>{
+        const obj={
+            like:true,
+            gameid:game.game.id
+        }
+        dispatch(updateLikesThunk(obj))
+    }
+
+    const decreaseCount=(e)=>{
+        const obj={
+            like:false,
+            gameid:game.game.id
+        }
+        dispatch(updateLikesThunk(obj))
+    }
 
     async function getGameReviews() {
         console.log("game",game)
@@ -22,45 +50,54 @@ const Reviews = (game) => {
             if(a.role=="streamer")return -1
             return 1;
         });
+        setLikes(response.data.data.likes.length)
+        setLiked(response.data.data.liked)
+        setreviewed(response.data.data.reviewed)
         setgamereview(response.data.data.reviews);
+        console.log("reviewed",reviewed)
+        console.log("likes",likes)
     }
 
-    const reviews=[
-        {
-            _id:123,
-            userName:"Monkey D. Luffy",
-            userAvatar:"https://pbs.twimg.com/profile_images/1584225321917751296/EexwtMbM_400x400.jpg",
-            comment:"This game is one of the best I've ever played! Kaizoku ou ni ore wa naru!",
-            rating:5.0,
-            featured:true
-        },
-        {
-            _id:234,
-            userName:"Anya Forger",
-            userAvatar:"https://pbs.twimg.com/profile_images/1576209420949782529/ZOMWYEMI_400x400.jpg",
-            comment:"Anya waku waku!",
-            rating:3.8,
-            featured:true
-        },
-        {
-            _id:345,
-            userName:"Itadori Yuji",
-            userAvatar:"https://pbs.twimg.com/profile_images/1356460276581687296/fI2e__Ft_400x400.jpg",
-            comment:"One of the worst games I've ever played!",
-            rating:1.23,
-            featured:false
-        },
-        {
-            _id:456,
-            userName:"Roronoa Zoro",
-            userAvatar:"https://pbs.twimg.com/profile_images/1589592333208924161/v0rPPnAA_400x400.jpg",
-            comment:"This game is very hard to navigate. I kept losing my way.😠",
-            rating:1.23,
-            featured:false
-        },
-    ]
+
+
     return (
+        <>
+        <div className="row">
+            <h5 className="col">Reviews</h5>
+            <div className="col-2 fs-5">
+                {!liked && (
+                    <i
+                        className="bi bi-heart me-1 pt-2"
+                        onClick={(e) => {
+                           increaseCount(e)
+                        }}
+                    ></i>
+                )}
+                {liked && (
+                    <i
+                        className="bi bi-heart-fill me-1 text-danger pt-2"
+                        onClick={(e) => {
+                          decreaseCount(e)
+                        }}
+                    ></i>
+                )}
+                {likes}
+            </div>
+            <div className="col-3">
+                {/*<button className="btn btn-primary rounded rounded-pill">*/}
+                {/*  Post a review*/}
+                {/*</button>*/}
+
+                { userData.profile.isLoggedIn&&  <button className="btn btn-primary rounded rounded-pill"  disabled={reviewed?true:false} onClick={openModal}>Post review</button>}
+                { !userData.profile.isLoggedIn&& <Link to="/login"><button className="btn btn-primary rounded rounded-pill" >Post review</button></Link> }
+                {showModal ? <Modal setShowModal={setShowModal} game={game.game} type={"new"}/> : null}
+
+            </div>
+
+           </div>
+
             <ul className="list-group">
+                <br/>
                 {gamereview&& gamereview.map(review=> userData.profile.isLoggedIn && review.uid==userData.profile._id && <ReviewItem key={review._id} review={review} iseditable={true}/>)}
                 <br/>
                 {gamereview&& gamereview.map(review=> (!userData.profile.isLoggedIn||review.uid!=userData.profile._id) &&  <ReviewItem key={review._id} review={review} iseditable={false}/>)}
@@ -76,6 +113,7 @@ const Reviews = (game) => {
                 {/*    }*/}
                 {/*})}*/}
             </ul>
+        </>
     );
 }
 

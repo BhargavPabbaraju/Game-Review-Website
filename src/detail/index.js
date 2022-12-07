@@ -18,10 +18,7 @@ const DetailComponent = () => {
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const openModal = () => {
-    setShowModal(true);
-  };
+
 
   useEffect(() => {
     const getData = async () => {
@@ -41,7 +38,7 @@ const DetailComponent = () => {
     getData();
   }, []);
 
-  let [liked, setLiked] = useState(false);
+
 
   let bg_image =
     "https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg";
@@ -105,37 +102,6 @@ const DetailComponent = () => {
             ))}
             {!game.stores && <p>No stores found.</p>}
             {game.stores.length <= 0 && <p>No stores found.</p>}
-          </div>
-          <div className="row">
-            <h5 className="col">Reviews</h5>
-            <div className="col-2 fs-5">
-              {!liked && (
-                <i
-                  className="bi bi-heart me-1 pt-2"
-                  onClick={(e) => {
-                    setLiked(!liked);
-                  }}
-                ></i>
-              )}
-              {liked && (
-                <i
-                  className="bi bi-heart-fill me-1 text-danger pt-2"
-                  onClick={(e) => {
-                    setLiked(!liked);
-                  }}
-                ></i>
-              )}
-              {game.likes}
-            </div>
-            <div className="col-3">
-              {/*<button className="btn btn-primary rounded rounded-pill">*/}
-              {/*  Post a review*/}
-              {/*</button>*/}
-
-              { userData.profile.isLoggedIn&&  <button className="btn btn-primary rounded rounded-pill" onClick={openModal}>Post review</button>}
-              {showModal ? <Modal setShowModal={setShowModal} game={game} type={"new"}/> : null}
-
-            </div>
           </div>
           <div className="row mt-4">
             <Reviews game={game} />

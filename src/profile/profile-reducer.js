@@ -2,13 +2,13 @@ import React from "react";
 import { createSlice } from "@reduxjs/toolkit";
 import {
   CheckIsLoggedIn,
-   deleteReviewThunk,
-   postReviewThunk, updateReviewThunk,
+  deleteReviewThunk,
+  postReviewThunk, updateReviewThunk,
   createUserThunk,
   followUserThunk,
   loginUserThunk,
   updateUserThunk,
-  unFollowUserThunk,
+  unFollowUserThunk, updateLikesThunk,
 } from "../services/user-thunks";
 // firstName:"Roronoa",
 //     lastName:"Zoro",
@@ -106,6 +106,16 @@ const profileSlice = createSlice({
               activity:payload.data.activity
             }
             console.log("updateReview",state.profile)
+          }
+        },
+    [updateLikesThunk.fulfilled]:
+        (state, { payload }) => {
+          if(payload){
+            state.profile={
+              ...state.profile,
+              activity:payload.data.activity
+            }
+            console.log("like",state.profile)
           }
         },
     [followUserThunk.fulfilled]: (state, { payload }) => {

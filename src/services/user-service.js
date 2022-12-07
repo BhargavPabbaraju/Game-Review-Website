@@ -123,3 +123,32 @@ export const deleteUser = async (tid) => {
   const response = await axios.delete(`${BACKEND_API}/${tid}`);
   return response.data;
 };
+
+export const increaseCount = async (obj) => {
+  const gameid=obj.gameid
+  console.log(" service like gameid",gameid)
+  const token = localStorage.getItem("WebDevToken");
+  console.log("token",token)
+  const response = await axios.get(`${BACKEND_API}/details/like/`+gameid, {
+    headers: { "x-auth-token": token },
+  });
+  console("like",response)
+  if (response.data.err) {
+    return false;
+  }
+  return response
+};
+
+export const decreaseCount = async (obj) => {
+  const gameid=obj.gameid
+  console.log(" dislike ",obj)
+  const token = localStorage.getItem("WebDevToken");
+  const response = await axios.get(`${BACKEND_API}/details/dislike/`+gameid, {
+    headers: { "x-auth-token": token },
+  });
+  console("dislike",response)
+  if (response.data.err) {
+    return false;
+  }
+  return response
+};

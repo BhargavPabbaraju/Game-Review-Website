@@ -1,11 +1,11 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import ReactDom from "react-dom";
 import {postReviewThunk, updateReviewThunk} from "../services/user-thunks";
 import {useDispatch, useSelector} from "react-redux";
 
 export const Modal = ({ setShowModal, game,type }) => {
   // close the modal when clicking outside the modal.
-  const user=useSelector(state => state.userData.profile)
+  console.log("modelgame",game)
   const modalRef = useRef();
   console.log("modeldata",game)
   const closeModal = (e) => {
@@ -17,12 +17,13 @@ export const Modal = ({ setShowModal, game,type }) => {
   const [review, setReview]=useState(type=="new"?"":game.review)
   const [rating, setRating]=useState(type="new"?"":game.rating)
   const dispatch=useDispatch();
+
   function postreview(e){
 
     e.preventDefault()
     console.log("type",gametype)
     console.log("typecheck",gametype==="new")
-    console.log("postgame",game)
+    console.log("postgame",game.id)
     //call axios and post review
     const obj={
       gameid: game.id,
@@ -41,7 +42,7 @@ export const Modal = ({ setShowModal, game,type }) => {
       console.log("dispatching for update",editgame)
       dispatch(updateReviewThunk(editgame));
       console.log("updating review")}
-    window.location.reload();
+   // window.location.reload();
     setShowModal(false);
   }
 
