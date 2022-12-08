@@ -28,6 +28,8 @@ const Reviews = (game) => {
             like:true,
             gameid:game.game.id
         }
+        setLiked(!liked)
+        setLikes(likes+1)
         dispatch(updateLikesThunk(obj))
     }
 
@@ -36,6 +38,8 @@ const Reviews = (game) => {
             like:false,
             gameid:game.game.id
         }
+        setLiked(!liked)
+        setLikes(likes-1)
         dispatch(updateLikesThunk(obj))
     }
 

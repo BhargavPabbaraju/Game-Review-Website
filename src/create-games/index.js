@@ -7,6 +7,8 @@ import gameReducer, {
   updateGame,
 } from "./game-reducer";
 import { createGameThunk, updateGameThunk } from "../services/create-game";
+import axios from "axios";
+import {BACKEND_API} from "../services/user-service";
 
 const CreateGameComponent = () => {
   const userData = useSelector((state) => state.userData);
@@ -15,7 +17,31 @@ const CreateGameComponent = () => {
   let [tag, setTag] = useState("");
   let [repr, setRepr] = useState("");
   let [url, setUrl] = useState("");
+  const [gameHandle,setGameHandle]= useState("");
+  const [validGamehandle,setValidGameHandle]=useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  async function checkGameHandleExist() {
+    if (gameHandle.toString().length == 0) return;
+    const token = localStorage.getItem("WebDevToken");
+    const response = await axios.get(
+        `${BACKEND_API}/games/checkhandle/`+gameHandle.toLowerCase(),
+        {
+          headers: { "x-auth-token": token },
+        }
+
+    );
+    console.log(response);
+    if (response.data.status == 200 && response.data.available) {
+      setValidGameHandle(true);
+    } else {
+      alert("Sorry,you already created a game with this handle");
+      setValidGameHandle(false);
+    }
+  }
+
+
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (searchParams.get("id")) {
@@ -26,6 +52,7 @@ const CreateGameComponent = () => {
       setTag(data.genres.join(","));
       setUrl(data.stores.join(","));
       setRepr(data.description);
+      setGameHandle(data.handle);
     }
   }, [userData]);
   const saveClickHandler = () => {
@@ -36,6 +63,7 @@ const CreateGameComponent = () => {
       genres: tags,
       description: repr,
       stores: store,
+      handle: gameHandle
     };
     if (searchParams.get("id")) {
       newGame.cgameid = searchParams.get("id");
@@ -48,7 +76,8 @@ const CreateGameComponent = () => {
   return (
     <form id="usrform">
       <div className="border border-secondary rounded-4 ">
-        <h4 className="mb-0 p-3">Add game</h4>
+        {searchParams.get("id")? <h4 className="mb-0 p-3">Edit Game</h4>:
+        <h4 className="mb-0 p-3">Add Game</h4>}
         <div className="row p-2 mb-1">
           <div className="col-3 col-md-3 pt-4">
             <label>Title:</label>
@@ -61,6 +90,23 @@ const CreateGameComponent = () => {
               placeholder="Title goes here"
               onChange={(event) => setTitle(event.target.value)}
               value={title}
+            ></input>
+          </div>
+        </div>
+        <div className="row p-2 mb-1">
+          <div className="col-3 col-md-3 pt-4">
+            <label>Game Handle:</label>
+          </div>
+          <div className="col-3 col-md-2 pt-4">
+            <input
+                type="text"
+                id="gamehandle"
+                name="gamehandle"
+                placeholder="Game handle goes here"
+                onChange={(event) => setGameHandle(event.target.value)}
+                disabled={!!searchParams.get("id")}
+                value={gameHandle}
+                onBlur={checkGameHandleExist}
             ></input>
           </div>
         </div>
@@ -129,7 +175,12 @@ const CreateGameComponent = () => {
         <Link to="/viewGame">
           <div className="row p-2 mb-1">
             <div align="center" className="col-12 col-md-12 pt-4">
-              <button onClick={saveClickHandler}>Save</button>
+              <button disabled={
+                !title|| !gameHandle || !tag || !validGamehandle || !repr
+                    ? true
+                    : false
+              }
+                      onClick={saveClickHandler}>Save</button>
             </div>
           </div>
         </Link>

@@ -1,15 +1,49 @@
-import React from "react";
+import React, {useState} from "react";
 import "./index.css";
 import ProfileDetails from "./profile-details";
 import {Link} from "react-router-dom";
 import ProfileReview from "../profile-review";
 import {useSelector} from "react-redux";
-
-
+import {BACKEND_API} from "../services/user-service";
+import axios from "axios";
 
 const ProfileComponent = () => {
     const profile = useSelector(
         (state) => state.userData.profile);
+    const [file,setfile]=useState("")
+    const [ff,setff]=useState("")
+
+    const handlegetimg=(e)=>{
+      const file= e.target.files[0]
+        setfile(file)
+    }
+
+    const upload=async (e)=>{
+        console.log("setting image")
+        e.preventDefault()
+        console.log("file",file)
+
+        // get secure url from our server
+        const response = await axios.get(`${BACKEND_API}/image/s3Url/eee.jpg`);
+        console.log(response.body);
+        const {url} = response.data;
+
+        console.log("url" , url)
+
+        // post the image direclty to the s3 bucket
+        await fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "multipart/form-data"
+            },
+            body: file
+        })
+
+        const imageUrl = url.split('?')[0]
+       console.log("imageUrl",imageUrl)
+        setff(imageUrl)
+        console.log("ff",ff)
+    }
     return(
         <div className="border border-secondary rounded-4 ">
             <div className="row">
@@ -37,12 +71,17 @@ const ProfileComponent = () => {
                     <Link to="/edit-profile">
                         <button className="btn btn-light rounded-pill float-end me-3">Edit profile</button>
                     </Link>
+                    {/*<form>*/}
+                    {/*       <input id="imageInput" type="file" accept="image/*" onChange={handlegetimg} />*/}
+                    {/*        <button type="submit"  onClick={upload}>Upload</button>*/}
+                    {/*</form>*/}
                     {/*<Link to="/register">*/}
                     {/*    <button className="btn btn-light rounded-pill float-end me-3">Register</button>*/}
                     {/*</Link>*/}
                     {/*<Link to="/login">*/}
                     {/*    <button className="btn btn-light rounded-pill float-end me-3">Login</button>*/}
                     {/*</Link>*/}
+
                 </div>
             </div>
             <div className="wd-pull-up ms-4">
