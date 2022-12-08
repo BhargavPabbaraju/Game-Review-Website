@@ -16,6 +16,9 @@ function ProfileComponentOther() {
   const userData = useSelector((state) => state.userData);
   useEffect(() => {
     const lastSegment = location.pathname.split("/").pop();
+    if (lastSegment == userData.profile._id) {
+      navigate("/profile");
+    }
     userApi(lastSegment);
   }, [userData]);
 

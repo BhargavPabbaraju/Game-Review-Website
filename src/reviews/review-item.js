@@ -4,7 +4,6 @@ import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {deleteReviewThunk} from "../services/user-thunks";
 const ReviewItem = ({review,iseditable}) => {
-    console.log("sending model",review)
     const [showModal, setShowModal] = useState(false);
     const openModal = () => {
         setShowModal(true);
@@ -15,7 +14,6 @@ const ReviewItem = ({review,iseditable}) => {
       let obj={
           gameid:review.gameid
       }
-      console.log("calling delete review",obj)
       dispatch(deleteReviewThunk(obj))
         window.location.reload();
     }

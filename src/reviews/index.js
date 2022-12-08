@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import ReviewItem from "./review-item";
 import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
@@ -117,4 +117,4 @@ const Reviews = (game) => {
     );
 }
 
-export default  Reviews;
+export default Reviews;

@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from "react";
 import ReactDom from "react-dom";
-import {postReviewThunk, updateReviewThunk} from "../services/user-thunks";
-import {useDispatch, useSelector} from "react-redux";
+import { postReviewThunk, updateReviewThunk } from "../services/user-thunks";
+import { useDispatch, useSelector } from "react-redux";
 
-export const Modal = ({ setShowModal, game,type }) => {
+export const Modal = ({ setShowModal, game, type }) => {
   // close the modal when clicking outside the modal.
   console.log("modelgame",game)
   const modalRef = useRef();
