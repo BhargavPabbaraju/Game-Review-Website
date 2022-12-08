@@ -9,6 +9,7 @@ import {
   loginUserThunk,
   updateUserThunk,
   unFollowUserThunk, updateLikesThunk,
+    favoriteGameThunk,unfavoriteGameThunk,
 } from "../services/user-thunks";
 import {
   createGameThunk,
@@ -123,6 +124,22 @@ const profileSlice = createSlice({
           ...state.profile,
           following_list: payload.data.following_list,
           following_count: payload.data.following_count,
+        };
+      }
+    },
+    [favoriteGameThunk.fulfilled]: (state, { payload }) => {
+      if (payload) {
+        state.profile = {
+          ...state.profile,
+          favorites:payload.data.favorites,
+        };
+      }
+    },
+    [unfavoriteGameThunk.fulfilled]: (state, { payload }) => {
+      if (payload) {
+        state.profile = {
+          ...state.profile,
+          favorites:payload.data.favorites,
         };
       }
     },

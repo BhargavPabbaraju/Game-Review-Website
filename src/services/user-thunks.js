@@ -38,6 +38,22 @@ export const unFollowUserThunk = createAsyncThunk(
     return await service.unfollowUser(uid);
   }
 );
+
+export const favoriteGameThunk = createAsyncThunk(
+    "tuits/favoriteGame",
+    async (gid) => {
+        return await service.favoriteGame(gid);
+    }
+);
+
+export const unfavoriteGameThunk = createAsyncThunk(
+    "tuits/unfavoriteGame",
+    async (gid) => {
+        return await service.unfavoriteGame(gid);
+    }
+);
+
+
 export const updateReviewThunk =
     createAsyncThunk(
         'tuits/updateTuit',
@@ -61,4 +77,6 @@ export const updateLikesThunk =
           await service.decreaseCount(obj)
         }
     )
+
+
 

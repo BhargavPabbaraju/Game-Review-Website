@@ -62,7 +62,8 @@ const ProfileComponent = () => {
             <div className="row mt-2">
                 <div className="col-3 ms-4 me-0">
                     <img alt="Profile"
-                         src={profile.profile_pic} className="rounded-circle wd-profile-picture" width={120}/>
+                         src={profile.profile_pic} className="rounded-circle wd-profile-picture"  height={120}
+                         width={120}/>
                 </div>
                 <div className="col-1">
                     <span className="badge rounded-pill bg-primary fs-6">{profile.role}</span>

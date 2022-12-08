@@ -5,7 +5,7 @@ import axios from "axios";
 import {BACKEND_API} from "../services/user-service";
 import {Modal} from "../detail/modal";
 import {Link} from "react-router-dom";
-import {updateLikesThunk} from "../services/user-thunks";
+import {favoriteGameThunk, updateLikesThunk,unfavoriteGameThunk} from "../services/user-thunks";
 
 const Reviews = (game) => {
     const [gamereview, setgamereview]=useState("")
@@ -14,6 +14,7 @@ const Reviews = (game) => {
     const [reviewed,setreviewed]=useState(false)
     const dispatch=useDispatch();
     const userData = useSelector((state) => state.userData);
+    const [favorited,setFavorited] = useState(false);
     useEffect(() => {
         getGameReviews();
     }, [userData]);
@@ -48,8 +49,9 @@ const Reviews = (game) => {
         const response = await axios.get(
             `${BACKEND_API}/details/getdetails/`+game.game.id,{headers: { "x-auth-token": userData.profile.token }}
         );
-        console.log("response",response)
+        console.log("response",response);
         const obj=response.data.data.reviews;
+        setFavorited(response.data.data.favorited);
         obj.sort(function(a, b){
             if(a.role=="streamer")return -1
             return 1;
@@ -62,13 +64,34 @@ const Reviews = (game) => {
         console.log("likes",likes)
     }
 
+    const favoriteGameHandler=()=>{
+        dispatch(favoriteGameThunk({gameid:game.game.id}));
+        setFavorited(true);
+    }
+
+    const unfavoriteGameHandler = ()=>{
+        dispatch(unfavoriteGameThunk(game.game.id));
+        setFavorited(false);
+    }
+
+
+
+
 
 
     return (
         <>
         <div className="row">
-            <h5 className="col">Reviews</h5>
-            <div className="col-2 fs-5">
+            <h5 className="col-3">Reviews</h5>
+            {!favorited ? <button className="btn btn-warning rounded-pill col-3" onClick={
+                favoriteGameHandler
+            }>Favorite</button> :
+             <button className="btn btn-dark rounded-pill col-3" onClick={
+                 unfavoriteGameHandler
+             }>Unfavorite</button>
+            }
+
+            <div className="col-3 fs-5 ps-5">
                 {!liked && (
                     <i
                         className="bi bi-heart me-1 pt-2"

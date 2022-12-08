@@ -1,6 +1,7 @@
 import axios from "axios";
 import reviews from "../reviews";
 
+
 //const API_BASE = process.env.REACT_APP_API_BASE;
 export const BACKEND_API = "http://localhost:8080";
 
@@ -115,9 +116,32 @@ export const followUser = async (uid) => {
   return response;
 };
 
+
+export async function favoriteGame(gid) {
+  const token = localStorage.getItem("WebDevToken");
+  const response = await axios.post(`${BACKEND_API}/favorites`, gid, {
+    headers: { "x-auth-token": token },
+  });
+  if (response.data.status !== 200) {
+    return false;
+  }
+  return response;
+}
+
 export const unfollowUser = async (uid) => {
   const token = localStorage.getItem("WebDevToken");
   const response = await axios.post(`${BACKEND_API}/unfollow`, uid, {
+    headers: { "x-auth-token": token },
+  });
+  if (response.data.status !== 200) {
+    return false;
+  }
+  return response;
+};
+
+export const unfavoriteGame = async (gid) => {
+  const token = localStorage.getItem("WebDevToken");
+  const response = await axios.delete(`${BACKEND_API}/favorites/${gid}` ,{
     headers: { "x-auth-token": token },
   });
   if (response.data.status !== 200) {
