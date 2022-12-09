@@ -54,7 +54,7 @@ export const unfavoriteGameThunk = createAsyncThunk(
 );
 
 export const updateReviewThunk = createAsyncThunk(
-  "tuits/updateTuit",
+  "tuits/updateReview",
   async (review) => {
     return await service.updateReview(review);
   }

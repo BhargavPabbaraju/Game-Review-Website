@@ -86,6 +86,7 @@ const profileSlice = createSlice({
           ...state.profile,
           activity: payload.data.activity,
         };
+        console.log("updated REvire", state.profile);
       }
     },
     [updateLikesThunk.fulfilled]: (state, { payload }) => {

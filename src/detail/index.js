@@ -5,11 +5,10 @@ import Reviews from "../reviews";
 import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
 import { apiKey } from "../services/user-service";
-import "./modal.css"
+import "./modal.css";
 import Popup from "reactjs-popup";
-import {Modal} from "./modal";
-import {useSelector} from "react-redux";
-
+import { Modal } from "./modal";
+import { useSelector } from "react-redux";
 
 const DetailComponent = () => {
   const userData = useSelector((state) => state.userData);
@@ -18,7 +17,6 @@ const DetailComponent = () => {
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
 
   useEffect(() => {
     const getData = async () => {
@@ -38,12 +36,8 @@ const DetailComponent = () => {
     getData();
   }, []);
 
-
-
   let bg_image =
     "https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg";
-
-
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "../detail/modal";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -17,6 +17,9 @@ const ReviewItem = ({ review, iseditable }) => {
     dispatch(deleteReviewThunk(obj));
     // window.location.reload();
   };
+  useEffect(() => {
+    console.log("review", review);
+  }, []);
   return (
     <li className="list-group-item">
       {review.role == "streamer" && (
@@ -62,9 +65,11 @@ const ReviewItem = ({ review, iseditable }) => {
             </div>
           </div>
           <div className="row mt-2">
-            <textarea className="form-control" readOnly>
-              {review.review}
-            </textarea>
+            <textarea
+              className="form-control"
+              value={review.review}
+              readOnly
+            ></textarea>
           </div>
         </div>
       </div>

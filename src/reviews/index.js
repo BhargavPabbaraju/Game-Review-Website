@@ -17,6 +17,7 @@ const Reviews = (game) => {
   const [likes, setLikes] = useState(0);
   const [reviewed, setreviewed] = useState(false);
   const [favorited, setFavorited] = useState(false);
+  const [totalData, setTotalData] = useState({});
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userData);
 
@@ -34,8 +35,13 @@ const Reviews = (game) => {
       like: true,
       gameid: game.game.id,
     };
-    setLiked(!liked);
-    setLikes(likes + 1);
+    setTotalData((preState) => ({
+      ...preState,
+      likes: preState.likes + 1,
+      liked: !preState.liked,
+    }));
+    // setLiked(!liked);
+    // setLikes(likes + 1);
     dispatch(updateLikesThunk(obj));
   };
 
@@ -44,8 +50,13 @@ const Reviews = (game) => {
       like: false,
       gameid: game.game.id,
     };
-    setLiked(!liked);
-    setLikes(likes - 1);
+    setTotalData((preState) => ({
+      ...preState,
+      likes: preState.likes - 1,
+      liked: !preState.liked,
+    }));
+    // setLiked(!liked);
+    // setLikes(likes - 1);
     dispatch(updateLikesThunk(obj));
   };
 
@@ -55,33 +66,36 @@ const Reviews = (game) => {
       { headers: { "x-auth-token": userData.profile.token } }
     );
     const obj = response.data.data.reviews;
-
+    console.log("data", obj);
     obj.sort(function (a, b) {
       if (a.role == "streamer") return -1;
       return 1;
     });
-    setFavorited(response.data.data.favorited);
-    setLikes(response.data.data.likes.length);
-    setLiked(response.data.data.liked);
-    setreviewed(response.data.data.reviewed);
-    setgamereview(response.data.data.reviews);
+    // setFavorited(response.data.data.favorited);
+    // setLikes(response.data.data.likes.length);
+    // setLiked(response.data.data.liked);
+    // setreviewed(response.data.data.reviewed);
+    // setgamereview(response.data.data.reviews);
+    setTotalData(response.data.data);
   }
 
   const favoriteGameHandler = () => {
     dispatch(favoriteGameThunk({ gameid: game.game.id }));
-    setFavorited(true);
+    setTotalData((preState) => ({ ...preState, favorited: true }));
+    // setFavorited(true);
   };
 
   const unfavoriteGameHandler = () => {
     dispatch(unfavoriteGameThunk(game.game.id));
-    setFavorited(false);
+    setTotalData((preState) => ({ ...preState, favorited: false }));
+    // setFavorited(false);
   };
 
   return (
     <>
       <div className="row">
         <h5 className="col-3">Reviews</h5>
-        {!favorited ? (
+        {!totalData.favorited ? (
           <button
             className="btn btn-warning rounded-pill col-3"
             onClick={favoriteGameHandler}
@@ -98,7 +112,7 @@ const Reviews = (game) => {
         )}
 
         <div className="col-3 fs-5 ps-5">
-          {!liked && (
+          {!totalData.liked && (
             <i
               className="bi bi-heart me-1 pt-2"
               onClick={(e) => {
@@ -106,7 +120,7 @@ const Reviews = (game) => {
               }}
             ></i>
           )}
-          {liked && (
+          {totalData.liked && (
             <i
               className="bi bi-heart-fill me-1 text-danger pt-2"
               onClick={(e) => {
@@ -114,7 +128,7 @@ const Reviews = (game) => {
               }}
             ></i>
           )}
-          {likes}
+          {totalData.likes && totalData.likes.length}
         </div>
         <div className="col-3">
           {/*<button className="btn btn-primary rounded rounded-pill">*/}
@@ -124,7 +138,7 @@ const Reviews = (game) => {
           {userData.profile.isLoggedIn && (
             <button
               className="btn btn-primary rounded rounded-pill"
-              disabled={reviewed ? true : false}
+              disabled={totalData.reviewed ? true : false}
               onClick={openModal}
             >
               Post review
@@ -145,27 +159,29 @@ const Reviews = (game) => {
 
       <ul className="list-group">
         <br />
-        {gamereview &&
-          gamereview.map(
+        {totalData.reviews &&
+          totalData.reviews.map(
             (review) =>
               userData.profile.isLoggedIn &&
               review.uid._id == userData.profile._id && (
                 <ReviewItem
                   key={review._id}
                   review={review}
+                  aReview={review.review}
                   iseditable={true}
                 />
               )
           )}
         <br />
-        {gamereview &&
-          gamereview.map(
+        {totalData.reviews &&
+          totalData.reviews.map(
             (review) =>
               (!userData.profile.isLoggedIn ||
                 review.uid._id != userData.profile._id) && (
                 <ReviewItem
                   key={review.uid._id}
                   review={review}
+                  aReview={review.review}
                   iseditable={false}
                 />
               )
@@ -181,6 +197,7 @@ const Reviews = (game) => {
         {/*    }*/}
         {/*})}*/}
       </ul>
+     
     </>
   );
 };
