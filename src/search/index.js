@@ -38,7 +38,10 @@ const SearchComponent = () => {
   }, []);
 
   const searchHandler = async (e) => {
-    if (e.key === "Enter" && !ref.current.checked) {
+    if (
+      e.key === "Enter" &&
+      (ref.current == undefined ? true : !ref.current.checked)
+    ) {
       const arr = searchState.url.split("&");
       const newUrl = arr[0] + "&search_precise=true&search=" + query;
       prevNextClick(newUrl);
