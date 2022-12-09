@@ -19,7 +19,6 @@ async function UpcomingGames() {
   // const response = await axios.get(`${BACKEND_API}/games/getgame/${id}`, {
   //   headers: { "x-auth-token": userData.profile.token },
   // });
-  // console.log(response);
   // if (response.data.status == 200) {
   //   setGame(response.data.games);
   // } else {

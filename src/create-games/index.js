@@ -8,7 +8,7 @@ import gameReducer, {
 } from "./game-reducer";
 import { createGameThunk, updateGameThunk } from "../services/create-game";
 import axios from "axios";
-import {BACKEND_API} from "../services/user-service";
+import { BACKEND_API } from "../services/user-service";
 
 const CreateGameComponent = () => {
   const userData = useSelector((state) => state.userData);
@@ -17,21 +17,19 @@ const CreateGameComponent = () => {
   let [tag, setTag] = useState("");
   let [repr, setRepr] = useState("");
   let [url, setUrl] = useState("");
-  const [gameHandle,setGameHandle]= useState("");
-  const [validGamehandle,setValidGameHandle]=useState(false);
+  const [gameHandle, setGameHandle] = useState("");
+  const [validGamehandle, setValidGameHandle] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
   async function checkGameHandleExist() {
     if (gameHandle.toString().length == 0) return;
     const token = localStorage.getItem("WebDevToken");
     const response = await axios.get(
-        `${BACKEND_API}/games/checkhandle/`+gameHandle.toLowerCase(),
-        {
-          headers: { "x-auth-token": token },
-        }
-
+      `${BACKEND_API}/games/checkhandle/` + gameHandle.toLowerCase(),
+      {
+        headers: { "x-auth-token": token },
+      }
     );
-    console.log(response);
     if (response.data.status == 200 && response.data.available) {
       setValidGameHandle(true);
     } else {
@@ -39,8 +37,6 @@ const CreateGameComponent = () => {
       setValidGameHandle(false);
     }
   }
-
-
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -63,7 +59,7 @@ const CreateGameComponent = () => {
       genres: tags,
       description: repr,
       stores: store,
-      handle: gameHandle
+      handle: gameHandle,
     };
     if (searchParams.get("id")) {
       newGame.cgameid = searchParams.get("id");
@@ -76,8 +72,11 @@ const CreateGameComponent = () => {
   return (
     <form id="usrform">
       <div className="border border-secondary rounded-4 ">
-        {searchParams.get("id")? <h4 className="mb-0 p-3">Edit Game</h4>:
-        <h4 className="mb-0 p-3">Add Game</h4>}
+        {searchParams.get("id") ? (
+          <h4 className="mb-0 p-3">Edit Game</h4>
+        ) : (
+          <h4 className="mb-0 p-3">Add Game</h4>
+        )}
         <div className="row p-2 mb-1">
           <div className="col-3 col-md-3 pt-4">
             <label>Title:</label>
@@ -99,14 +98,14 @@ const CreateGameComponent = () => {
           </div>
           <div className="col-3 col-md-2 pt-4">
             <input
-                type="text"
-                id="gamehandle"
-                name="gamehandle"
-                placeholder="Game handle goes here"
-                onChange={(event) => setGameHandle(event.target.value)}
-                disabled={!!searchParams.get("id")}
-                value={gameHandle}
-                onBlur={checkGameHandleExist}
+              type="text"
+              id="gamehandle"
+              name="gamehandle"
+              placeholder="Game handle goes here"
+              onChange={(event) => setGameHandle(event.target.value)}
+              disabled={!!searchParams.get("id")}
+              value={gameHandle}
+              onBlur={checkGameHandleExist}
             ></input>
           </div>
         </div>
@@ -175,12 +174,16 @@ const CreateGameComponent = () => {
         <Link to="/viewGame">
           <div className="row p-2 mb-1">
             <div align="center" className="col-12 col-md-12 pt-4">
-              <button disabled={
-                !title|| !gameHandle || !tag || !validGamehandle || !repr
+              <button
+                disabled={
+                  !title || !gameHandle || !tag || !validGamehandle || !repr
                     ? true
                     : false
-              }
-                      onClick={saveClickHandler}>Save</button>
+                }
+                onClick={saveClickHandler}
+              >
+                Save
+              </button>
             </div>
           </div>
         </Link>

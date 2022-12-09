@@ -13,7 +13,7 @@ export const CheckIsLoggedIn = createAsyncThunk("checkloggedIn", async () => {
 });
 
 export const updateUserThunk = createAsyncThunk(
-  "tuits/updateTuit",
+  "tuits/update",
   async (user) => {
     return await service.updateUser(user);
   }
@@ -25,12 +25,12 @@ export const followUserThunk = createAsyncThunk(
     return await service.followUser(uid);
   }
 );
-export const postReviewThunk =
-    createAsyncThunk(
-        'tuits/updateTuit',
-        async (review) =>{
-          return  await service.postReview(review)}
-    )
+export const postReviewThunk = createAsyncThunk(
+  "tuits/postReview",
+  async (review) => {
+    return await service.postReview(review);
+  }
+);
 
 export const unFollowUserThunk = createAsyncThunk(
   "tuits/unfollowUser",
@@ -40,43 +40,39 @@ export const unFollowUserThunk = createAsyncThunk(
 );
 
 export const favoriteGameThunk = createAsyncThunk(
-    "tuits/favoriteGame",
-    async (gid) => {
-        return await service.favoriteGame(gid);
-    }
+  "tuits/favoriteGame",
+  async (gid) => {
+    return await service.favoriteGame(gid);
+  }
 );
 
 export const unfavoriteGameThunk = createAsyncThunk(
-    "tuits/unfavoriteGame",
-    async (gid) => {
-        return await service.unfavoriteGame(gid);
-    }
+  "tuits/unfavoriteGame",
+  async (gid) => {
+    return await service.unfavoriteGame(gid);
+  }
 );
 
+export const updateReviewThunk = createAsyncThunk(
+  "tuits/updateTuit",
+  async (review) => {
+    return await service.updateReview(review);
+  }
+);
 
-export const updateReviewThunk =
-    createAsyncThunk(
-        'tuits/updateTuit',
-        async (review) =>{
-          return  await service.updateReview(review)}
-    )
+export const deleteReviewThunk = createAsyncThunk(
+  "tuits/deleteReview",
+  async (review) => {
+    return await service.deleteReview(review);
+  }
+);
 
-export const deleteReviewThunk =
-    createAsyncThunk(
-        'tuits/updateTuit',
-        async (review) =>{
-          return  await service.deleteReview(review)}
-    )
-
-export const updateLikesThunk =
-    createAsyncThunk(
-        'tuits/updateTuit',
-        async (obj) =>{
-          if(obj.like)
-          {return  await service.increaseCount(obj)}
-          await service.decreaseCount(obj)
-        }
-    )
-
-
-
+export const updateLikesThunk = createAsyncThunk(
+  "tuits/updateLikes",
+  async (obj) => {
+    if (obj.like) {
+      return await service.increaseCount(obj);
+    }
+    await service.decreaseCount(obj);
+  }
+);

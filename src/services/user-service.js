@@ -1,7 +1,6 @@
 import axios from "axios";
 import reviews from "../reviews";
 
-
 //const API_BASE = process.env.REACT_APP_API_BASE;
 export const BACKEND_API = "http://localhost:8080";
 
@@ -72,7 +71,6 @@ export const updateReview = async (obj) => {
       headers: { "x-auth-token": token },
     }
   );
-
   if (response.data.err) {
     return false;
   }
@@ -116,7 +114,6 @@ export const followUser = async (uid) => {
   return response;
 };
 
-
 export async function favoriteGame(gid) {
   const token = localStorage.getItem("WebDevToken");
   const response = await axios.post(`${BACKEND_API}/favorites`, gid, {
@@ -141,7 +138,7 @@ export const unfollowUser = async (uid) => {
 
 export const unfavoriteGame = async (gid) => {
   const token = localStorage.getItem("WebDevToken");
-  const response = await axios.delete(`${BACKEND_API}/favorites/${gid}` ,{
+  const response = await axios.delete(`${BACKEND_API}/favorites/${gid}`, {
     headers: { "x-auth-token": token },
   });
   if (response.data.status !== 200) {
@@ -156,32 +153,27 @@ export const deleteUser = async (tid) => {
 };
 
 export const increaseCount = async (obj) => {
-  const gameid=obj.gameid
-  console.log(" service like gameid",gameid)
+  const gameid = obj.gameid;
   const token = localStorage.getItem("WebDevToken");
-  console.log("token",token)
-  const response = await axios.get(`${BACKEND_API}/details/like/`+gameid, {
+  const response = await axios.get(`${BACKEND_API}/details/like/` + gameid, {
     headers: { "x-auth-token": token },
   });
-  console("like",response)
   if (response.data.err) {
     return false;
   }
-  return response
+  return response;
 };
 
 export const decreaseCount = async (obj) => {
-  const gameid=obj.gameid
-  console.log(" dislike ",obj)
+  const gameid = obj.gameid;
   const token = localStorage.getItem("WebDevToken");
-  const response = await axios.get(`${BACKEND_API}/details/dislike/`+gameid, {
+  const response = await axios.get(`${BACKEND_API}/details/dislike/` + gameid, {
     headers: { "x-auth-token": token },
   });
-  console("dislike",response)
   if (response.data.err) {
     return false;
   }
-  return response
+  return response;
 };
 
 export const creategame = async (data) => {
