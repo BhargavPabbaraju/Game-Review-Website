@@ -17,7 +17,12 @@ const Reviews = (game) => {
   const [likes, setLikes] = useState(0);
   const [reviewed, setreviewed] = useState(false);
   const [favorited, setFavorited] = useState(false);
-  const [totalData, setTotalData] = useState({});
+  //const [totalData, setTotalData] = useState({
+  //   likes: 0,
+  //   liked: false,
+  //   reviewed: false,
+  //   favorited: false,
+  // });
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userData);
 
@@ -35,13 +40,13 @@ const Reviews = (game) => {
       like: true,
       gameid: game.game.id,
     };
-    setTotalData((preState) => ({
-      ...preState,
-      likes: preState.likes + 1,
-      liked: !preState.liked,
-    }));
-    // setLiked(!liked);
-    // setLikes(likes + 1);
+    // setTotalData((preState) => ({
+    //   ...preState,
+    //   likes: preState.likes + 1,
+    //   liked: !preState.liked,
+    // }));
+    setLiked(!liked);
+    setLikes(likes + 1);
     dispatch(updateLikesThunk(obj));
   };
 
@@ -50,13 +55,13 @@ const Reviews = (game) => {
       like: false,
       gameid: game.game.id,
     };
-    setTotalData((preState) => ({
-      ...preState,
-      likes: preState.likes - 1,
-      liked: !preState.liked,
-    }));
-    // setLiked(!liked);
-    // setLikes(likes - 1);
+    // setTotalData((preState) => ({
+    //   ...preState,
+    //   likes: preState.likes - 1,
+    //   liked: !preState.liked,
+    // }));
+    setLiked(!liked);
+    setLikes(likes - 1);
     dispatch(updateLikesThunk(obj));
   };
 
@@ -71,31 +76,31 @@ const Reviews = (game) => {
       if (a.role == "streamer") return -1;
       return 1;
     });
-    // setFavorited(response.data.data.favorited);
-    // setLikes(response.data.data.likes.length);
-    // setLiked(response.data.data.liked);
-    // setreviewed(response.data.data.reviewed);
-    // setgamereview(response.data.data.reviews);
-    setTotalData(response.data.data);
+    setFavorited(response.data.data.favorited);
+    setLikes(response.data.data.likes.length);
+    setLiked(response.data.data.liked);
+    setreviewed(response.data.data.reviewed);
+    setgamereview(response.data.data.reviews);
+    //setTotalData(response.data.data);
   }
 
   const favoriteGameHandler = () => {
     dispatch(favoriteGameThunk({ gameid: game.game.id }));
-    setTotalData((preState) => ({ ...preState, favorited: true }));
-    // setFavorited(true);
+    //setTotalData((preState) => ({ ...preState, favorited: true }));
+    setFavorited(true);
   };
 
   const unfavoriteGameHandler = () => {
     dispatch(unfavoriteGameThunk(game.game.id));
-    setTotalData((preState) => ({ ...preState, favorited: false }));
-    // setFavorited(false);
+    //setTotalData((preState) => ({ ...preState, favorited: false }));
+    setFavorited(false);
   };
 
   return (
     <>
       <div className="row">
         <h5 className="col-3">Reviews</h5>
-        {!totalData.favorited ? (
+        {!favorited ? (
           <button
             className="btn btn-warning rounded-pill col-3"
             onClick={favoriteGameHandler}
@@ -112,7 +117,7 @@ const Reviews = (game) => {
         )}
 
         <div className="col-3 fs-5 ps-5">
-          {!totalData.liked && (
+          {!liked && (
             <i
               className="bi bi-heart me-1 pt-2"
               onClick={(e) => {
@@ -120,7 +125,7 @@ const Reviews = (game) => {
               }}
             ></i>
           )}
-          {totalData.liked && (
+          {liked && (
             <i
               className="bi bi-heart-fill me-1 text-danger pt-2"
               onClick={(e) => {
@@ -128,17 +133,13 @@ const Reviews = (game) => {
               }}
             ></i>
           )}
-          {totalData.likes && totalData.likes.length}
+          {likes}
         </div>
         <div className="col-3">
-          {/*<button className="btn btn-primary rounded rounded-pill">*/}
-          {/*  Post a review*/}
-          {/*</button>*/}
-
           {userData.profile.isLoggedIn && (
             <button
               className="btn btn-primary rounded rounded-pill"
-              disabled={totalData.reviewed ? true : false}
+              disabled={reviewed ? true : false}
               onClick={openModal}
             >
               Post review
@@ -159,8 +160,8 @@ const Reviews = (game) => {
 
       <ul className="list-group">
         <br />
-        {totalData.reviews &&
-          totalData.reviews.map(
+        {gamereview &&
+          gamereview.map(
             (review) =>
               userData.profile.isLoggedIn &&
               review.uid._id == userData.profile._id && (
@@ -173,8 +174,8 @@ const Reviews = (game) => {
               )
           )}
         <br />
-        {totalData.reviews &&
-          totalData.reviews.map(
+        {gamereview &&
+          gamereview.map(
             (review) =>
               (!userData.profile.isLoggedIn ||
                 review.uid._id != userData.profile._id) && (
@@ -186,18 +187,7 @@ const Reviews = (game) => {
                 />
               )
           )}
-        {/*{gamereview&& gamereview.map(review=><ReviewItem key={review._id} review={review} iseditable={true}/>)}*/}
-        {/*{gamereview&&gamereview.filter(review=>review._id==userData.profile.id)}*/}
-        {/*{gamereview&& gamereview.forEach((review)=>{*/}
-        {/*    if(userData.profile.isLoggedIn && review.uid==userData.profile._id){*/}
-        {/*        && <ReviewItem  review={review} iseditable={true}/>*/}
-        {/*    }*/}
-        {/*    else {*/}
-        {/*      return   <ReviewItem review={review} iseditable={false}/>*/}
-        {/*    }*/}
-        {/*})}*/}
       </ul>
-     
     </>
   );
 };
