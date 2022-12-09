@@ -26,7 +26,7 @@ const ProfileReviewItem =({review}) =>{
                             {Math.round(review.review.rating * 10) / 10}
                         </div>:""}
                     </div>
-                    <div className="row ps-2">
+                    <div className="row ps-2 me-2">
                         {review.review && review.review.review?
                         <textarea className="form-control" disabled={true}>
                             {review.review.review}

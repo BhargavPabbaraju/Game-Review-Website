@@ -11,22 +11,22 @@ const ProfileDetails = () => {
             {thisUser &&
             <div className="mb-2">
                 <div className="row">
-                    <div className="col-6">
+                    <div className="col-4">
                         <i className="bi bi-envelope"></i>
                         <span className="ms-1 d-md-inline d-none">{profile.email}</span>
                     </div>
-                    <div className="col-6">
+                    <div className="col-4">
                         <i className="bi bi-telephone"></i>
-                        <span className="ms-1">{profile.phone}</span>
+                        <span className="ms-1 d-md-inline d-none">{profile.phone}</span>
                     </div>
                 </div>
             </div>}
             <div className="row">
-                <div className="col-3">
+                <div className="col-4">
                     <i className="bi bi-geo-alt"></i>
                     <span className="ms-1">{profile.location}</span>
                 </div>
-                <div className="col-5">
+                <div className="col-4">
                     <i className="bi bi-balloon"></i>
                     <span className="ms-1">Born {
                         new Date(profile.dob).toLocaleDateString(
