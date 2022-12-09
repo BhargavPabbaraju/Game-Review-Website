@@ -8,7 +8,7 @@ export const GameCard = ({ card }) => {
         <div className="col-4 d-flex align-items-stretch p-3">
           <Link className="text-dark text-decoration-none"
                 to={"/detail/"+card.id} element={<DetailComponent/>}>
-          <div className="card">
+          <div className="card h-100 w-100">
             <img
                 className="card-img-top"
                 alt="Card"
