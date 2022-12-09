@@ -25,10 +25,10 @@ const Created_game = ({ result }) => {
   };
 
   let bg_image = result.background_image;
-  if (!bg_image) {
-    bg_image =
-      "https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg";
-  }
+  // if (!bg_image) {
+  //   bg_image =
+  //     "https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg";
+  // }
   return (
     <div className="col-md-6 d-flex align-items-center p-3 col-xs-12 mh-100">
       <div className="card w-100 mh-200">

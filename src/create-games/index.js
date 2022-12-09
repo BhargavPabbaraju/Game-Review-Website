@@ -9,6 +9,7 @@ import gameReducer, {
 import { createGameThunk, updateGameThunk } from "../services/create-game";
 import axios from "axios";
 import { BACKEND_API } from "../services/user-service";
+import {updateUserThunk} from "../services/user-thunks";
 
 const CreateGameComponent = () => {
   const userData = useSelector((state) => state.userData);
@@ -51,23 +52,59 @@ const CreateGameComponent = () => {
       setGameHandle(data.handle);
     }
   }, [userData]);
-  const saveClickHandler = () => {
+
+  const saveClickHandler = async () => {
     const tags = tag.split(",");
     const store = url.split(",");
-    const newGame = {
-      name: title,
-      genres: tags,
-      description: repr,
-      stores: store,
-      handle: gameHandle,
-    };
-    if (searchParams.get("id")) {
-      newGame.cgameid = searchParams.get("id");
-      dispatch(updateGameThunk(newGame));
-    } else {
-      dispatch(createGameThunk(newGame));
+    const response = await upload();
+    if (response) {
+      const newGame = {
+        name: title,
+        genres: tags,
+        description: repr,
+        stores: store,
+        handle: gameHandle,
+      };
+      if (searchParams.get("id")) {
+        newGame.cgameid = searchParams.get("id");
+        console.log("updategame",{...newGame,...response})
+        dispatch(updateGameThunk({...newGame,...response}));
+      } else {
+        console.log("creategame",{...newGame,...response})
+        dispatch(createGameThunk({...newGame,...response}));
+      }
     }
+
   };
+
+
+
+  const upload = async () => {
+    const obj = {};
+    if (!image == "") {
+      const imgName = userData.profile.username + gameHandle+ "gamepic.jpg";
+      const response = await axios.get(`${BACKEND_API}/image/s3Url/${imgName}`);
+      const { url } = response.data;
+      const response1 = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        body: image,
+      });
+      if (response1) {
+        const imageUrl = url.split("?")[0];
+        obj.background_image = imageUrl;
+        setImage(imageUrl);
+      }
+    }
+    return obj;
+  };
+
+  const updateGamePic=(e)=>{
+    const file = e.target.files[0];
+    setImage(file);
+  }
 
   return (
     <form id="usrform">
@@ -115,12 +152,11 @@ const CreateGameComponent = () => {
           </div>
           <div className="col-9 col-md-9 pt-4">
             <input
-              type="file"
-              id="myFile"
-              name="filename"
-              onChange={(event) => setImage(event.target.value)}
-              value={image}
-            ></input>
+                className="form-control"
+                type="file"
+                id="myFile"
+                onChange={updateGamePic}
+            />
           </div>
         </div>
         <div className="row p-2 mb-1">
@@ -174,16 +210,20 @@ const CreateGameComponent = () => {
         <Link to="/viewGame">
           <div className="row p-2 mb-1">
             <div align="center" className="col-12 col-md-12 pt-4">
-              <button
-                disabled={
-                  !title || !gameHandle || !tag || !validGamehandle || !repr
-                    ? true
-                    : false
-                }
-                onClick={saveClickHandler}
-              >
-                Save
-              </button>
+              {searchParams.get("id") ? (
+                  <button onClick={saveClickHandler}>Save</button>
+              ) : (
+                  <button
+                      disabled={
+                        !title || !gameHandle || !tag || !validGamehandle || !repr
+                            ? true
+                            : false
+                      }
+                      onClick={saveClickHandler}
+                  >
+                    Save
+                  </button>
+              )}
             </div>
           </div>
         </Link>

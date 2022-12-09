@@ -4,6 +4,7 @@ import * as service from "./user-service";
 export const createGameThunk = createAsyncThunk(
   "App/createGame",
   async (userrequest) => {
+    console.log("userrequest",userrequest)
     return await service.creategame(userrequest);
   }
 );
