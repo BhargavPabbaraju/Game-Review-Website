@@ -15,7 +15,7 @@ const ReviewItem = ({ review, iseditable }) => {
       gameid: review.gameid,
     };
     dispatch(deleteReviewThunk(obj));
-    window.location.reload();
+    // window.location.reload();
   };
   return (
     <li className="list-group-item">
