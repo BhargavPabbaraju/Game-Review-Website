@@ -98,25 +98,25 @@ const Reviews = (game) => {
 
   return (
     <>
-      <div className="row">
-        <h5 className="col-3">Reviews</h5>
-        {!favorited ? (
-          <button
-            className="btn btn-warning rounded-pill col-3"
-            onClick={favoriteGameHandler}
-          >
-            Favorite
-          </button>
-        ) : (
-          <button
-            className="btn btn-dark rounded-pill col-3"
-            onClick={unfavoriteGameHandler}
-          >
-            Unfavorite
-          </button>
-        )}
-
-        <div className="col-3 fs-5 ps-5">
+      <div className="row mb-5 mt-2">
+        <div className="col h-100">
+          {!favorited ? (
+              <button
+                  className="btn btn-warning rounded-pill col-3"
+                  onClick={favoriteGameHandler}
+              >
+                Favorite
+              </button>
+          ) : (
+               <button
+                   className="btn btn-dark rounded-pill col-3"
+                   onClick={unfavoriteGameHandler}
+               >
+                 Unfavorite
+               </button>
+           )}
+        </div>
+        <div className="col-3 ps-5 h-100 fs-5 d-flex">
           {!liked && (
             <i
               className="bi bi-heart me-1 pt-2"
@@ -133,30 +133,38 @@ const Reviews = (game) => {
               }}
             ></i>
           )}
-          {likes}
-        </div>
-        <div className="col-3">
-          {userData.profile.isLoggedIn && (
-            <button
-              className="btn btn-primary rounded rounded-pill"
-              disabled={reviewed ? true : false}
-              onClick={openModal}
-            >
-              Post review
-            </button>
-          )}
-          {!userData.profile.isLoggedIn && (
-            <Link to="/login">
-              <button className="btn btn-primary rounded rounded-pill">
-                Post review
-              </button>
-            </Link>
-          )}
-          {showModal ? (
-            <Modal setShowModal={setShowModal} game={game.game} type={"new"} />
-          ) : null}
+          <span className="d-flex p-1">{likes}</span>
         </div>
       </div>
+        <div className="row">
+          <h5 className="col-9">Reviews</h5>
+          <div className="col-3">
+            {/*<button className="btn btn-primary rounded rounded-pill">*/}
+            {/*  Post a review*/}
+            {/*</button>*/}
+
+            {userData.profile.isLoggedIn && (
+                <button
+                    className="btn btn-primary rounded rounded-pill"
+                    disabled={reviewed ? true : false}
+                    onClick={openModal}
+                >
+                  Post review
+                </button>
+            )}
+            {!userData.profile.isLoggedIn && (
+                <Link to="/login">
+                  <button className="btn btn-primary rounded rounded-pill">
+                    Post review
+                  </button>
+                </Link>
+            )}
+            {showModal ? (
+                <Modal setShowModal={setShowModal} game={game.game} type={"new"} />
+            ) : null}
+          </div>
+        </div>
+
 
       <ul className="list-group">
         <br />
