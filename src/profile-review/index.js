@@ -10,7 +10,7 @@ const ProfileReview = () => {
       {/*<div className="row">*/}
       {/*    <h4>{reviews.length}</h4>*/}
       {/*</div>*/}
-      <ul className="list-group">
+      <ul className="list-group pe-0">
         {games ? games.map((x) => <ProfileReviewItem review={x} />) : ""}
       </ul>
     </div>
