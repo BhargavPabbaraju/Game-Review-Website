@@ -49,7 +49,7 @@ function Upcoming() {
             {game.background_image ? (
               <img
                 alt="game bg"
-                src={game.background_image}
+                src={game.background_image + "?v=" + Date.now()}
                 className="w-100 rounded-5"
                 height={350}
               />

@@ -32,7 +32,7 @@ const Created_game = ({ result }) => {
   return (
     <div className="col-md-6 d-flex align-items-center p-3 col-xs-12 mh-100">
       <div className="card w-100 mh-200">
-        <img className="card-img-top" alt="Card" src={bg_image} height={200} />
+        <img className="card-img-top" alt="Card" src={bg_image+ "?v=" + Date.now()} height={200} />
         <div className="card-body">
           <i
             className="bi bi-trash3-fill float-end m-2"
