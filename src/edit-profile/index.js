@@ -90,7 +90,7 @@ const EditProfile = () => {
         <div className="col">
           <img
             alt="Banner"
-            src={profile.cover_pic}
+            src={profile.cover_pic+ "?v=" + Date.now()}
             className="w-100"
             height={240}
           />
@@ -100,7 +100,7 @@ const EditProfile = () => {
         <div className="col-3 ms-4 me-0">
           <img
             alt="Profile"
-            src={profile.profile_pic}
+            src={profile.profile_pic+ "?v=" + Date.now()}
             className="rounded-circle wd-profile-picture"
             width={120}
           />

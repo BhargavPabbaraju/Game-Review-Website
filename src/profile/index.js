@@ -47,7 +47,7 @@ const ProfileComponent = () => {
         <div className="col">
           <img
             alt="Banner"
-            src={profile.cover_pic}
+            src={profile.cover_pic + "?v=" + Date.now()}
             className="w-100"
             height={240}
           />
@@ -57,7 +57,7 @@ const ProfileComponent = () => {
         <div className="col-3 ms-4 me-0">
           <img
             alt="Profile"
-            src={profile.profile_pic}
+            src={profile.profile_pic + "?v=" + Date.now()}
             className="rounded-circle wd-profile-picture"
             height={120}
             width={120}
@@ -74,16 +74,6 @@ const ProfileComponent = () => {
               Edit profile
             </button>
           </Link>
-          {/*<form>*/}
-          {/*       <input id="imageInput" type="file" accept="image/*" onChange={handlegetimg} />*/}
-          {/*        <button type="submit"  onClick={upload}>Upload</button>*/}
-          {/*</form>*/}
-          {/*<Link to="/register">*/}
-          {/*    <button className="btn btn-light rounded-pill float-end me-3">Register</button>*/}
-          {/*</Link>*/}
-          {/*<Link to="/login">*/}
-          {/*    <button className="btn btn-light rounded-pill float-end me-3">Login</button>*/}
-          {/*</Link>*/}
         </div>
       </div>
       <div className="wd-pull-up ms-4">

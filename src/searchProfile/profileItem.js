@@ -36,7 +36,7 @@ const Profile = ({ profile, followHandler, unfollowHandler }) => {
                 <img
                   className="card-img-top"
                   alt="Card"
-                  src={profile.cover_pic}
+                  src={profile.cover_pic + "?v=" + Date.now()}
                   height={100}
                 />
               </div>
@@ -44,7 +44,7 @@ const Profile = ({ profile, followHandler, unfollowHandler }) => {
                 <img
                   className="rounded-circle user-profile-pic position-absolute  "
                   style={{ width: "75px", height: "75px" }}
-                  src={profile.profile_pic}
+                  src={profile.profile_pic + "?v=" + Date.now()}
                 />
               </div>
               <div className="p-1">

@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {apiKey} from "../services/user-service";
+import { apiKey } from "../services/user-service";
 import GameCard from "./game-card";
-import {useSelector} from "react-redux";
-import {BACKEND_API} from "../services/user-service";
+import { useSelector } from "react-redux";
+import { BACKEND_API } from "../services/user-service";
 
 function UserActivities() {
   const [cards, setCards] = useState([]);
@@ -13,26 +13,31 @@ function UserActivities() {
   }, []);
 
   async function getRecentActivity() {
-    const response = await axios.get(
-        `${BACKEND_API}/home/activities`,{headers: { "x-auth-token": userData.profile.token }}
-    );
+    const response = await axios.get(`${BACKEND_API}/home/activities`, {
+      headers: { "x-auth-token": userData.profile.token },
+    });
     setCards(response.data.data);
   }
 
   return (
-      <div>
-        <div className="row p-3">
-          <h5>Recently Liked & Reviewed Games</h5>
-          {cards.map((card) => {
-            return <GameCard key={card.id} card={{
-              background_image:card.gameImage,
-                id:card.gameid,
-                name:card.gamename,}
-
-            } />;
-          })}
-        </div>
+    <div>
+      <div className="row p-3">
+        <h5>Recently Liked & Reviewed Games</h5>
+        {cards.map((card) => {
+          return (
+            <GameCard
+              key={card.id}
+              card={{
+                background_image: card.gameImage,
+                id: card.gameid,
+                name: card.gamename,
+                rating: card.rating,
+              }}
+            />
+          );
+        })}
       </div>
+    </div>
   );
 }
 

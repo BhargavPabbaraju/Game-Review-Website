@@ -50,7 +50,8 @@ function MainComponent() {
         style={{ position: "relative" }}
       >
         <Routes>
-          <Route index path="home" element={<HomeComponent />} />
+          <Route index element={<HomeComponent />} />
+          <Route path="home" element={<HomeComponent />} />
           <Route path="search" element={<SearchComponent />} />
           <Route path="detail/*" element={<DetailComponent />} />
           <Route path="upcoming/*" element={<UpcomingGames />} />

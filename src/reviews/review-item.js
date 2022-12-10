@@ -41,7 +41,12 @@ const ReviewItem = ({ review, iseditable }) => {
         </div>
         <div className="col">
           <div className="row fw-bolder">
-            <div className="col-md-9 col-9">{review.uid.username}</div>
+            <Link
+              className="col-md-9 col-9 text-decoration-none"
+              to={iseditable ? `/profile` : `/profile/${review.uid._id}`}
+            >
+              <div>{review.uid.username}</div>
+            </Link>
             <div className="col-md-3 col-3">
               <i className="bi bi-star-fill text-warning pe-1"></i>
               {Math.round(review.rating * 10) / 10}
