@@ -20,9 +20,14 @@ export const GameCards = () => {
     <div>
       <div className="row p-3">
         <h5>Top Rated Games</h5>
-        {cards.map((card) => {
-          return <GameCard key={card.id} card={card} />;
-        })}
+        <div className="row">
+          <div>
+            {cards.map((card) => {
+              return <GameCard key={card.id} card={card} />;
+            })}
+          </div>
+        </div>
+
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 export const GameCard = ({ card }) => {
   return (
 
-        <div className="col-4 d-flex align-items-stretch p-3">
+        <div className=" align-items-stretch p-3 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
           <Link className="text-dark text-decoration-none"
                 to={"/detail/"+card.id} element={<DetailComponent/>}>
           <div className="card h-100 w-100">
