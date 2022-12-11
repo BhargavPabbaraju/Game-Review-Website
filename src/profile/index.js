@@ -64,7 +64,7 @@ const ProfileComponent = () => {
           />
         </div>
         <div className="col-1">
-          <span className="badge rounded-pill bg-primary fs-6">
+          <span className="badge rounded-pill bg-primary fs-6 px-4">
             {profile.role}
           </span>
         </div>
