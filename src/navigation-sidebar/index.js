@@ -7,6 +7,7 @@ const NavigationSidebar = () => {
   const { pathname } = useLocation();
   const paths = pathname.split("/");
   const active = paths[1];
+  const active1 = paths[2] ? paths[2] : false;
   const userData = useSelector((state) => state.userData);
 
   return (
@@ -29,7 +30,9 @@ const NavigationSidebar = () => {
 
         <Link
           to="/profile"
-          className={`list-group-item ${active === "profile" ? "active" : ""}`}
+          className={`list-group-item ${
+            active === "profile" && !active1 ? "active" : ""
+          }`}
         >
           <i className="bi bi-person-fill pe-1"></i>
           <span className="d-none d-xl-inline">
